@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { , useRef, useState } from "react";
+import {useEffect, useRef, useState } from "react";
 
 export const BackgroundGradientAnimation = ({
   gradientBackgroundStart = "rgb(108, 0, 162)",
@@ -39,7 +39,7 @@ export const BackgroundGradientAnimation = ({
   const [curY, setCurY] = useState(0);
   const [tgX, setTgX] = useState(0);
   const [tgY, setTgY] = useState(0);
-  (() => {
+  useEffect(() => {
     document.body.style.setProperty(
       "--gradient-background-start",
       gradientBackgroundStart
@@ -58,7 +58,7 @@ export const BackgroundGradientAnimation = ({
     document.body.style.setProperty("--blending-value", blendingValue);
   }, []);
 
-  (() => {
+  useEffect(() => {
     function move() {
       if (!interactiveRef.current) {
         return;
@@ -82,7 +82,7 @@ export const BackgroundGradientAnimation = ({
   };
 
   const [isSafari, setIsSafari] = useState(false);
-  (() => {
+  useEffect(() => {
     setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
   }, []);
 
