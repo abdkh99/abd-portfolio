@@ -8,6 +8,7 @@ import {
   useMotionValueEvent,
 } from "motion/react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export const FloatingNav = ({
   navItems,
@@ -61,7 +62,7 @@ export const FloatingNav = ({
         )}
       >
         {navItems.map((navItem: any, idx: number) => (
-          <a
+          <Link
             key={`link=${idx}`}
             href={navItem.link}
             className={cn(
@@ -70,7 +71,7 @@ export const FloatingNav = ({
           >
             <span className="block sm:hidden">{navItem.icon}</span>
             <span className=" text-sm">{navItem.name}</span>
-          </a>
+          </Link>
         ))}
       
       </motion.div>

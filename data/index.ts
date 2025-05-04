@@ -82,56 +82,63 @@ export const projects = [
     id: 2,
     title: "Finpay – Fintech Landing Page with React, Tailwind & AOS",
     des: "A responsive and modern landing page designed for a fictional fintech startup. Built with React, Vite, and Tailwind CSS, and enhanced with scroll animations using the AOS (Animate On Scroll) library to create smooth user experience. This project focuses on clean UI, component reusability, and optimized layout for performance. Integrated interactive elements like credit card previews and payment methods for a realistic feel. Deployed on Vercel and version-controlled with GitHub.",
-    img: "/Finpay-Landing-Page.png",
+    img: "/Landing-page.png",
     iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/stream.svg", "/c.svg"],
     link: "https://landing-page-git-main-abdkh99s-projects.vercel.app/",
   },
   {
     id: 3,
-    title: "AI Image SaaS - Canva Application",
-    des: "A REAL Software-as-a-Service app with AI features and a payments and credits system using the latest tech stack.",
-    img: "/p3.svg",
-    iconLists: ["/re.svg", "/tail.svg", "/ts.svg", "/three.svg", "/c.svg"],
-    link: "https://github.com/adrianhajdin/ai_saas_app",
+    title: "Auth & API Integration System 🔐 ",
+    des: "A robust authentication and API integration system built with modern web technologies. Features include secure user login/register with token-based authentication, protected routes, error handling, and dynamic data fetching from external APIs. Designed for scalability and clean code architecture.",
+    img: "/auth.png",
+    iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/stream.svg", "/c.svg"],
+    link: "https://auth-7ggy.vercel.app/",
   },
   {
     id: 4,
-    title: "Animated Apple Iphone 3D Website",
-    des: "Recreated the Apple iPhone 15 Pro website, combining GSAP animations and Three.js 3D effects..",
-    img: "/p4.svg",
-    iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/three.svg", "/gsap.svg"],
-    link: "https://github.com/adrianhajdin/iphone",
+    title: "Anime Showcase Web App 🎌 ",
+    des: "A dynamic anime discovery platform built using public anime APIs. Users can browse trending anime, view detailed info, and search by genre or title. Built with React and styled with Tailwind CSS, featuring smooth animations and a responsive design for all devices.",
+    img: "/anime.png",
+    iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/stream.svg", "/c.svg"],
+    link: "https://api-show-case-tlno.vercel.app/",
+  },
+  {
+    id: 5,
+    title: " E-Commerce Coffee Store ☕",
+    des: "A full-stack e-commerce website for a modern coffee store, offering product listings, cart management, user authentication, and checkout functionality. Built using React for the frontend and Node.js/Express for the backend, with a clean UI and seamless UX.",
+    img: "/coffee.png",
+    iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/stream.svg", "/c.svg"],
+    link: "https://e-commerce5-5cwa.vercel.app/",
   },
 ];
-
 export const testimonials = [
   {
     quote:
-      "Collaborating with Adrian was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
+      "Collaborating with Abd Kh was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Abd Kh's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Abd Kh is the ideal partner.",
     name: "Michael Johnson",
     title: "Director of AlphaStream Technologies",
   },
   {
     quote:
-      "Collaborating with Adrian was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
+      "Collaborating with Abd Kh was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Abd Kh's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Abd Kh is the ideal partner.",
     name: "Michael Johnson",
     title: "Director of AlphaStream Technologies",
   },
   {
     quote:
-      "Collaborating with Adrian was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
+      "Collaborating with Abd Kh was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Abd Kh's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Abd Kh is the ideal partner.",
     name: "Michael Johnson",
     title: "Director of AlphaStream Technologies",
   },
   {
     quote:
-      "Collaborating with Adrian was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
+      "Collaborating with Abd Kh was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Abd Kh's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Abd Kh is the ideal partner.",
     name: "Michael Johnson",
     title: "Director of AlphaStream Technologies",
   },
   {
     quote:
-      "Collaborating with Adrian was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
+      "Collaborating with Abd Kh was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Abd Kh's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Abd Kh is the ideal partner.",
     name: "Michael Johnson",
     title: "Director of AlphaStream Technologies",
   },

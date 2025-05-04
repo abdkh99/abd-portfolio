@@ -1,13 +1,12 @@
 "use client";
-
+import Link from "next/link";
 import { FaLocationArrow } from "react-icons/fa6";
-
 import { projects } from "@/data";
 import { PinContainer } from "./ui/pin";
 
 const RecentProjects = () => {
   return (
-    <div className="py-20">
+    <div className="py-20 " id="projects">
       <h1 className="heading">
         A small selection of{" "}
         <span className="text-purple-500">recent projects</span>
@@ -20,31 +19,28 @@ const RecentProjects = () => {
       "
       >
         {projects.map((item) => (
-          <a
+          <Link
             key={item.id}
             href={item.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="lg:min-h-[32.5rem] h-[25rem] flex items-center justify-center sm:w-96 w-[80vw] xl:w-96 relative group block"
+            className="lg:min-h-[32.5rem] h-[25rem] flex items-center justify-center sm:w-96 w-[80vw] xl:w-96 relative group "
           >
             <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
             <PinContainer title="/ui.aceternity.com" href={item.link}>
-              <div className="relative flex items-center justify-center sm:w-96 w-[80vw] overflow-hidden h-[20vh] lg:h-[30vh] mb-10">
-                <div
-                  className="relative w-full h-full overflow-hidden lg:rounded-3xl"
-                  style={{ backgroundColor: "#13162D" }}
-                >
+              <div className="relative flex items-center justify-center sm:w-96 w-[80vw] overflow-hidden h-[20vh] lg:h-[30vh] mb-10 ">
+                <div className="relative w-full aspect-[16/9] rounded-3xl overflow-hidden bg-[#13162D] mb-10">
                   <img
                     src="/bg.png"
                     alt="bgimg"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute inset-0 flex items-center justify-center ">
                   <img
                     src={item.img}
                     alt="cover"
-                    className={`z-10 w-full h-full ${
+                    className={`z-10 xl:scale-125 xl:rotate-1 ${
                       item.id <= 2 ? "object-contain" : "object-cover"
                     }`}
                   />
@@ -88,7 +84,7 @@ const RecentProjects = () => {
                 </div>
               </div>
             </PinContainer>
-          </a>
+          </Link>
         ))}
       </div>
     </div>

@@ -1,9 +1,11 @@
-import React from 'react'
-import { Spotlight } from './ui/Spotlight'
-import { cn } from '@/lib/utils'
-import { TextGenerateEffect } from './ui/TextGenerateEffect';
-import MagicButton from './ui/MagicButton';
-import { FaLocationArrow } from 'react-icons/fa';
+import React from "react";
+import { Spotlight } from "./ui/Spotlight";
+import { cn } from "@/lib/utils";
+import { TextGenerateEffect } from "./ui/TextGenerateEffect";
+import MagicButton from "./ui/MagicButton";
+import { FaLocationArrow } from "react-icons/fa";
+import Link from "next/link";
+
 
 const Hero = () => {
   return (
@@ -42,15 +44,19 @@ const Hero = () => {
             words="Transforming Concepts into Seamless User Experiences"
           />
           <p className="text-center md:tracking-wider mb-4 text-sm md:text-lg lg:text-2xl">
-            Hi, I&apos;m Abdullah, a Next.js Developer based in Syria.
+            Hi, I&apos;m Abd Kh, a Next.js Developer based in Syria.
           </p>
-          <a href="#about">
-            <MagicButton title="Show my work !"
-           icon={<FaLocationArrow/>} position='right'/></a>
+          <Link href="#about">
+            <MagicButton
+              title="Show my work !"
+              icon={<FaLocationArrow />}
+              position="right"
+            />
+          </Link>
         </div>
       </div>
     </div>
-  ); 
-}
+  );
+};
 
-export default Hero
+export default Hero;

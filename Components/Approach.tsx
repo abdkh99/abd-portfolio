@@ -65,14 +65,15 @@ const Card = ({
   title: string;
   icon: React.ReactNode;
   children?: React.ReactNode;
-  description?:string;
+  description?: string;
 }) => {
   const [hovered, setHovered] = React.useState(false);
   return (
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="border border-black/[0.2] group/canvas-card flex items-center justify-center dark:border-white/[0.2]  max-w-sm w-full mx-auto p-4 relative lg:h-[35rem] rounded-3xl"
+      onClick={() => setHovered(!hovered)}
+      className="border border-black/[0.2] group/canvas-card flex items-center justify-center dark:border-white/[0.2] max-w-sm w-full mx-auto p-4 relative lg:h-[35rem] h-[25rem] rounded-3xl cursor-pointer"
     >
       <Icon className="absolute h-6 w-6 -top-3 -left-3 dark:text-white text-black" />
       <Icon className="absolute h-6 w-6 -bottom-3 -left-3 dark:text-white text-black" />
@@ -84,6 +85,7 @@ const Card = ({
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             className="h-full w-full absolute inset-0"
           >
             {children}
@@ -91,19 +93,38 @@ const Card = ({
         )}
       </AnimatePresence>
 
-      <div className="relative z-20">
-        <div className="text-center group-hover/canvas-card:-translate-y-4 absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] group-hover/canvas-card:opacity-0 transition duration-200 w-full  mx-auto flex items-center justify-center">
+      <div className="relative z-20 w-full h-full flex flex-col items-center justify-center">
+        <motion.div
+          className="text-center w-full mx-auto flex items-center justify-center"
+          animate={{
+            opacity: hovered ? 0 : 1,
+            y: hovered ? -20 : 0,
+          }}
+          transition={{ duration: 0.2 }}
+        >
           {icon}
-        </div>
-        <h2 className=" dark:text-white  opacity-0 group-hover/canvas-card:opacity-100 relative z-10 text-black mt-4 font-bold group-hover/ canvas-card:text-white group-hover/ canvas-card:-translate-y-2 transition duration-200 text-center text-3xl">
+        </motion.div>
+        <motion.h2
+          className="dark:text-white relative z-10 text-black mt-4 font-bold text-white text-center text-xl sm:text-2xl md:text-3xl px-4"
+          animate={{
+            opacity: hovered ? 1 : 0,
+            y: hovered ? 0 : 20,
+          }}
+          transition={{ duration: 0.2 }}
+        >
           {title}
-        </h2>
-        <h2
-          className="text-sm dark:text-white opacity-0 group-hover/canvas-card:opacity-100 relative z-10 text-black mt-4 font-bold group-hover/ canvas-card:text-white group-hover/ canvas-card:-translate-y-2 transition duration-200 text-center"
+        </motion.h2>
+        <motion.p
+          className="text-sm dark:text-white relative z-10 text-black mt-4 font-medium text-white text-center px-4"
           style={{ color: "#e4ecff" }}
+          animate={{
+            opacity: hovered ? 1 : 0,
+            y: hovered ? 0 : 20,
+          }}
+          transition={{ duration: 0.2, delay: 0.1 }}
         >
           {description}
-        </h2>
+        </motion.p>
       </div>
     </div>
   );
