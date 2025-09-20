@@ -39,7 +39,7 @@ const Hero = () => {
             />
             <GradualSpacing
               duration={0.8}
-              mainClassName="text-3xl md:text-5xl  font-bold tracking-tighter lg:text-6xl"
+              mainClassName="text-3xl md:text-5xl  font-bold tracking-tighter lg:text-6xl text-white  text-center"
               text="Transforming Concepts into Seamless"
             />
             <motion.div
