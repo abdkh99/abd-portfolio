@@ -47,20 +47,28 @@ const Hero = () => {
               animate="visible"
               className="text-center mb-5"
             >
-              <div className="text-transparent  bg-clip-text bg-gradient-to-r   from-violet-500     to-indigo-400  block text-3xl md:text-5xl lg:text-6xl font-bold">
-                <GradualSpacing
-                  duration={0.8}
-                  text="User Experience"
-                  mainClassName=""
-                ></GradualSpacing>
-              </div>
+              <GradualSpacing
+                duration={0.8}
+                text="User Experience"
+                mainClassName=" text-purple-600 block text-3xl md:text-5xl lg:text-6xl font-bold"
+              ></GradualSpacing>
             </motion.div>
             <GradualSpacing
-              duration={0.7}
+              duration={0.8}
               mainClassName="text-md  text-center md:text-lg lg:text-xl text-white mb-10 tracking-tighter"
               text="Hi, I'm Abd Kh, a Next.js Developer based in Syria."
             />
-            <CVButton />
+            <motion.div
+            initial={{ x: 0,opacity: 0 }}
+            animate={{ x: 20, opacity: 1 }}
+            transition={{
+              duration: 0.95,
+              ease: "easeInOut",
+            }}
+            className="z-20"
+          >
+              <CVButton />
+            </motion.div>
           </div>
         </div>
       </div>
