@@ -13,7 +13,7 @@ const Approuch = () => {
           <TextShimmer
             spread={5}
             duration={2.2}
-            className="font-bold [--base-color:var(--color-purple-900)] [--base-gradient-color:var(--color-purple-200)] dark:[--base-color:var(--color-purple-900)] dark:[--base-gradient-color:var(--color-purple-600)] "
+            className="font-bold  [--base-color:var(--color-purple-900)] [--base-gradient-color:var(--color-purple-600)] "
           >
             approach
           </TextShimmer>
@@ -44,7 +44,7 @@ const Approuch = () => {
               dotSize={2}
             />
             {/* Radial gradient for the cute fade */}
-            <div className="absolute inset-0 [mask-image:radial-gradient(400px_at_center,white,transparent)] bg-black/50 dark:bg-black/90" />
+            <div className="absolute inset-0 [mask-image:radial-gradient(400px_at_center,white,transparent)]  bg-black/90" />
           </Card>
           <Card
             title="Development & Launch"
@@ -80,12 +80,12 @@ const Card = ({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={() => setHovered(!hovered)}
-      className="border border-black/[0.2] group/canvas-card flex items-center justify-center dark:border-white/[0.2] max-w-sm w-full mx-auto p-4 relative lg:h-[35rem] h-[25rem] rounded-3xl cursor-pointer"
+      className="border border-white/[0.2] group/canvas-card flex items-center justify-center max-w-sm w-full mx-auto p-4 relative lg:h-[35rem] h-[25rem] rounded-3xl cursor-pointer"
     >
-      <Icon className="absolute h-6 w-6 -top-3 -left-3 dark:text-white text-black" />
-      <Icon className="absolute h-6 w-6 -bottom-3 -left-3 dark:text-white text-black" />
-      <Icon className="absolute h-6 w-6 -top-3 -right-3 dark:text-white text-black" />
-      <Icon className="absolute h-6 w-6 -bottom-3 -right-3 dark:text-white text-black" />
+      <Icon className="absolute h-6 w-6 -top-3 -left-3  text-white" />
+      <Icon className="absolute h-6 w-6 -bottom-3 -left-3  text-white" />
+      <Icon className="absolute h-6 w-6 -top-3 -right-3  text-white" />
+      <Icon className="absolute h-6 w-6 -bottom-3 -right-3  text-white" />
 
       <AnimatePresence>
         {hovered && (
@@ -112,7 +112,7 @@ const Card = ({
           {icon}
         </motion.div>
         <motion.h2
-          className="dark:text-white relative z-10  mt-4 font-bold text-white text-center text-xl sm:text-2xl md:text-3xl px-4"
+          className=" relative z-10  mt-4 font-bold text-white text-center text-xl sm:text-2xl md:text-3xl px-4"
           animate={{
             opacity: hovered ? 1 : 0,
             y: hovered ? 0 : 20,
@@ -122,7 +122,7 @@ const Card = ({
           {title}
         </motion.h2>
         <motion.p
-          className="text-sm dark:text-white relative z-10  mt-4 font-medium text-white text-center px-4"
+          className="text-sm  relative z-10  mt-4 font-medium text-white text-center px-4"
           style={{ color: "#e4ecff" }}
           animate={{
             opacity: hovered ? 1 : 0,

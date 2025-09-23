@@ -18,17 +18,16 @@ const Hero = () => {
           />
         </div>
 
-        <div className="absolute top-0 left-0 flex h-screen w-full items-center justify-center bg-white/[0.03] dark:bg-[#000319]">
+        <div className="absolute top-0 left-0 flex h-screen w-full items-center justify-center ] bg-[#000319]">
           <div
             className={cn(
               "absolute inset-0 left-0 top-0 w-[full] ",
               "[background-size:25px_20px]",
-              "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]",
-              "dark:[background-image:radial-gradient(#404040_0.8px,transparent_1px)]"
+              "[background-image:radial-gradient(#404040_0.8px,transparent_1px)]"
             )}
           />
 
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-[#000319]" />
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center  [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] bg-[#000319]" />
         </div>
         <div className="flex justify-center relative my-20 z-10">
           <div className="max-w-[89vw] md:max-w-2xl lg:max-w-[60vw] flex flex-col items-center justify-center">
