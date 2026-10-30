@@ -1,0 +1,181 @@
+/* Change the look here: colours and fonts are all variables. */
+.wrap {
+  --bg: #000319;
+  --fg: #ffffff;
+  --accent: #6838b6;
+  --accent-soft: #a5b4fc; /* the middle of the liquid gradient */
+  --pad: clamp(1.25rem, 4vw, 2.5rem);
+  --d: 1.05em; /* height of one odometer digit */
+  --font-initials: var(--font-display, inherit);
+  --font-tagline: var(--font-mono, ui-monospace, monospace);
+
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  touch-action: none;
+  color: var(--fg);
+}
+
+/* Returning visitors: hidden before hydration (see the inline script in layout.tsx) */
+:global(html[data-intro="seen"]) .wrap {
+  display: none;
+}
+
+/* ---- The art: one big letter, drawn in SVG ---- */
+.svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Solid cover. At the exit the letter is knocked out of it (see the mask in the TSX). */
+.cover {
+  fill: var(--bg);
+}
+
+/* Hidden until JS has measured and placed the letter, so nothing jumps. */
+.art {
+  opacity: 0;
+}
+
+/* Shared by every copy of the letter (outline, clip, hole). x / y are set by JS. */
+.ink {
+  font-family: var(--font-initials);
+  /* Fits the screen: tall on desktop, width-limited on phones / long initials */
+  font-size: min(58vh, calc(115vw / var(--chars, 1)));
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-anchor: middle;
+}
+
+/* The empty letter you see first */
+.outline {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.32);
+  stroke-width: 1.5px;
+  stroke-linejoin: round;
+  opacity: 0;
+}
+
+/* The letter-shaped window. JS grows its stroke at the exit so the window blooms outward. */
+.hole {
+  fill: #000;
+  stroke: #000;
+  stroke-width: 0;
+  stroke-linejoin: round;
+  opacity: 0;
+}
+
+/* Soft light behind the letter that gets stronger as the count rises */
+.glow {
+  opacity: 0;
+}
+
+/* Liquid gradient: accent at the bottom of the letter, white at the top */
+.rampFrom {
+  stop-color: var(--accent);
+}
+.rampMid {
+  stop-color: var(--accent-soft);
+}
+.rampTo {
+  stop-color: #fff;
+}
+
+/* The thin light line that rides the surface of the liquid, across the whole screen */
+.beamEdge {
+  stop-color: var(--accent-soft);
+  stop-opacity: 0;
+}
+.beamCore {
+  stop-color: #fff;
+  stop-opacity: 0.85;
+}
+
+.glowCore {
+  stop-color: var(--accent);
+  stop-opacity: 0.45;
+}
+.glowEdge {
+  stop-color: var(--accent);
+  stop-opacity: 0;
+}
+
+/* ---- UI: counter bottom-left, tagline bottom-right ---- */
+.content {
+  position: absolute;
+  inset: 0;
+  opacity: 0; /* GSAP reveals it once fonts are ready */
+  pointer-events: none;
+}
+
+.tagline {
+  position: absolute;
+  right: var(--pad);
+  bottom: calc(var(--pad) + env(safe-area-inset-bottom, 0px));
+  margin: 0;
+  overflow: hidden;
+  font-family: var(--font-tagline);
+  font-size: clamp(0.75rem, 1.5vw, 0.95rem);
+  letter-spacing: 0.1em;
+  text-align: right;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.taglineInner {
+  display: block;
+  padding: 0.2em 0;
+  transform: translateY(120%);
+}
+
+@media (max-width: 480px) {
+  .tagline {
+    max-width: 50%;
+  }
+}
+
+/* ---- Odometer counter ---- */
+.counter {
+  position: absolute;
+  left: var(--pad);
+  bottom: calc(var(--pad) + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  align-items: flex-start;
+  font-family: var(--font-initials);
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 500;
+  line-height: var(--d);
+  letter-spacing: -0.02em;
+}
+
+.reel {
+  display: block;
+  width: 0.62em;
+  height: var(--d);
+  overflow: hidden;
+}
+
+.stack {
+  display: block;
+  will-change: transform;
+}
+
+.digit {
+  display: block;
+  height: var(--d);
+  line-height: var(--d);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.percent {
+  margin-left: 0.25em;
+  padding-top: 0.35em;
+  font-size: 0.32em;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.7);
+}
