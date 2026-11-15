@@ -1,171 +1,323 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import Image from "next/image";
-import gsap from "gsap";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
 
 type Project = {
   name: string;
   kind: string;
+  summary: string;
   image: string;
   link: string;
   stack: string[];
 };
 
-const projects: Project[] = [
-  { name: "Landing Page", kind: "Marketing site", image: "/Landingpage.png", link: "https://landing-page-git-main-abdkh99s-projects.vercel.app/", stack: ["React", "TypeScript", "Tailwind"] },
-  { name: "Dashboard", kind: "Admin panel", image: "/Dashboard-Project.png", link: "https://dashboard-ebon-one-52.vercel.app/", stack: ["React", "Tailwind", "Charts"] },
-  { name: "Portfolio", kind: "Personal site", image: "/Portfolio-Project.png", link: "https://abd-portfolio-nm49.vercel.app/", stack: ["Next.js", "Tailwind", "Framer Motion"] },
-  { name: "XP-Zone Gaming", kind: "Website clone", image: "/XP-Zone.png", link: "https://xp-zone-73njj1hhf-abdkh99s-projects.vercel.app", stack: ["React", "Tailwind", "GSAP"] },
-  { name: "API Showcase", kind: "Developer tool", image: "/API-Showcase-Project.png", link: "https://api-show-case-tlno.vercel.app/", stack: ["Next.js", "Axios", "Tailwind"] },
-  { name: "Auth Demo", kind: "Web app", image: "/Auth-Demo-Project.png", link: "https://auth-7ggy.vercel.app/", stack: ["Next.js", "Firebase", "Tailwind"] },
-  { name: "Mini Store", kind: "E-commerce", image: "/E-commerce-Mini-Store-Project.png", link: "https://e-commerce5-5cwa.vercel.app/", stack: ["Next.js", "TypeScript", "Firebase"] },
-  { name: "Sass Landing", kind: "Marketing site", image: "/Sass-Landing-page.png", link: "https://sass-landing-page-eta.vercel.app/", stack: ["Next.js", "Tailwind"] },
+/* Edit `summary` with what you actually built and decided in each project. */
+const featured: Project[] = [
+  {
+    name: "Mini Store",
+    kind: "E-commerce",
+    summary:
+      "A small storefront in Next.js and TypeScript, with Firebase handling the data layer.",
+    image: "/E-commerce-Mini-Store-Project.png",
+    link: "https://e-commerce5-5cwa.vercel.app/",
+    stack: ["Next.js", "TypeScript", "Firebase"],
+  },
+  {
+    name: "Dashboard",
+    kind: "Admin panel",
+    summary:
+      "An admin panel in React where charts and tables make the numbers readable at a glance.",
+    image: "/Dashboard-Project.png",
+    link: "https://dashboard-ebon-one-52.vercel.app/",
+    stack: ["React", "Tailwind", "Charts"],
+  },
+  {
+    name: "Auth Demo",
+    kind: "Web app",
+    summary:
+      "A complete sign-in flow in Next.js, with Firebase Authentication behind it.",
+    image: "/Auth-Demo-Project.png",
+    link: "https://auth-7ggy.vercel.app/",
+    stack: ["Next.js", "Firebase", "Tailwind"],
+  },
+  {
+    name: "API Showcase",
+    kind: "Developer tool",
+    summary:
+      "Pulls data from public APIs with Axios and presents the results in a clean Next.js interface.",
+    image: "/API-Showcase-Project.png",
+    link: "https://api-show-case-tlno.vercel.app/",
+    stack: ["Next.js", "Axios", "Tailwind"],
+  },
 ];
 
-const ease = "ease-[cubic-bezier(.22,1,.36,1)]";
+const more: Project[] = [
+  {
+    name: "XP-Zone Gaming",
+    kind: "Website clone",
+    summary: "",
+    image: "/XP-Zone.png",
+    link: "https://xp-zone-73njj1hhf-abdkh99s-projects.vercel.app",
+    stack: ["React", "Tailwind", "GSAP"],
+  },
+  {
+    name: "Landing Page",
+    kind: "Marketing site",
+    summary: "",
+    image: "/Landingpage.png",
+    link: "https://landing-page-git-main-abdkh99s-projects.vercel.app/",
+    stack: ["React", "TypeScript", "Tailwind"],
+  },
+  {
+    name: "Sass Landing",
+    kind: "Marketing site",
+    summary: "",
+    image: "/Sass-Landing-page.png",
+    link: "https://sass-landing-page-eta.vercel.app/",
+    stack: ["Next.js", "Tailwind"],
+  },
+  {
+    name: "Portfolio v1",
+    kind: "Personal site",
+    summary: "",
+    image: "/Portfolio-Project.png",
+    link: "https://abd-portfolio-nm49.vercel.app/",
+    stack: ["Next.js", "Tailwind", "Framer Motion"],
+  },
+];
+
+const pad = (n: number) => String(n).padStart(2, "0");
+const host = (u: string) => {
+  try {
+    return new URL(u).host;
+  } catch {
+    return u;
+  }
+};
+
+function Arrow({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      className={className}
+    >
+      <path d="M4.5 11.5l7-7M5.5 4.5h6v6" />
+    </svg>
+  );
+}
+
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-purple-400";
+
+function Card({
+  p,
+  i,
+  total,
+  progress,
+  reduce,
+}: {
+  p: Project;
+  i: number;
+  total: number;
+  progress: MotionValue<number>;
+  reduce: boolean;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const imgY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    reduce ? ["0%", "0%"] : ["-6%", "6%"],
+  );
+  // Each card settles a little smaller as the next one covers it; the last one stays full size.
+  const scale = useTransform(
+    progress,
+    [i / total, 1],
+    [1, reduce ? 1 : 1 - (total - 1 - i) * 0.04],
+  );
+
+  return (
+    <div
+      ref={ref}
+      className="sticky pb-6 md:pb-[12vh]"
+      style={{ top: `calc(5rem + ${i * 1.25}rem)` }}
+    >
+      <motion.article
+        style={{ scale }}
+        className="grid origin-top overflow-hidden rounded-lg border border-white/10 bg-[#05071d] lg:h-[min(32rem,calc(100svh-10.5rem))] lg:grid-cols-[5fr_7fr]"
+      >
+        <div className="order-2 flex flex-col justify-between gap-10 p-6 sm:p-8 lg:order-1 lg:p-10">
+          <div>
+            <div className="flex items-center justify-between font-mono text-xs tracking-wider text-white/40">
+              <span>
+                {pad(i + 1)} / {pad(total)}
+              </span>
+              <span className="uppercase">{p.kind}</span>
+            </div>
+            <h3 className="mt-6 text-[clamp(2.25rem,4.2vw,4rem)] font-medium leading-[0.95] tracking-[-0.035em] text-white">
+              {p.name}
+            </h3>
+            <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-white/60">
+              {p.summary}
+            </p>
+          </div>
+
+          <div>
+            <p className="font-mono text-xs leading-relaxed text-white/40">
+              {p.stack.join("  /  ")}
+            </p>
+            <a
+              href={p.link}
+              target="_blank"
+              rel="noreferrer"
+              className={`group/cta mt-5 inline-flex items-center gap-2 border-b border-white/30 pb-1 text-sm font-medium text-white transition-colors hover:border-purple-400 hover:text-purple-300 ${focusRing}`}
+            >
+              View live site
+              <Arrow className="transition-transform duration-300 group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5 motion-reduce:transition-none" />
+            </a>
+          </div>
+        </div>
+
+        <div className="order-1 p-3 sm:p-4 lg:order-2 lg:pl-0">
+          <a
+            href={p.link}
+            target="_blank"
+            rel="noreferrer"
+            tabIndex={-1}
+            aria-hidden
+            className="group flex flex-col overflow-hidden rounded-md border border-white/10 bg-[#000319] lg:h-full"
+          >
+            <div className="flex items-center gap-3 border-b border-white/10 px-4 py-2.5">
+              <span className="flex gap-1.5" aria-hidden>
+                <i className="size-2 rounded-full bg-white/15" />
+                <i className="size-2 rounded-full bg-white/15" />
+                <i className="size-2 rounded-full bg-white/15" />
+              </span>
+              <span className="min-w-0 flex-1 truncate rounded bg-white/[0.04] px-3 py-1 font-mono text-[11px] text-white/45">
+                {host(p.link)}
+              </span>
+            </div>
+            <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:min-h-0 lg:flex-1">
+              <motion.div
+                style={{ y: imgY }}
+                className="absolute inset-x-0 -top-[7%] h-[114%]"
+              >
+                <Image
+                  src={p.image}
+                  alt={`${p.name} screenshot`}
+                  fill
+                  sizes="(min-width:1024px) 58vw, 100vw"
+                  className="object-cover object-top transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.03] motion-reduce:transition-none"
+                />
+              </motion.div>
+            </div>
+          </a>
+        </div>
+      </motion.article>
+    </div>
+  );
+}
 
 export default function RecentProjects() {
-  const [active, setActive] = useState(-1);
-  const [view, setView] = useState<"list" | "grid">("list");
-  const preview = useRef<HTMLDivElement>(null);
-  const xTo = useRef<ReturnType<typeof gsap.quickTo> | null>(null);
-  const yTo = useRef<ReturnType<typeof gsap.quickTo> | null>(null);
-
-  useEffect(() => {
-    const el = preview.current;
-    if (!el) return;
-    gsap.set(el, { xPercent: -50, yPercent: -50 });
-    xTo.current = gsap.quickTo(el, "x", { duration: 0.55, ease: "power3" });
-    yTo.current = gsap.quickTo(el, "y", { duration: 0.55, ease: "power3" });
-  }, []);
-
-  const follow = (e: React.MouseEvent) => {
-    xTo.current?.(e.clientX);
-    yTo.current?.(e.clientY);
-  };
+  const reduce = !!useReducedMotion();
+  const stackRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: stackRef,
+    offset: ["start start", "end end"],
+  });
 
   return (
     <section
       id="projects"
-      className="py-24 md:py-40 font-[family-name:var(--font-display)] text-[#EDEBE6]"
+      className="py-20 font-[family-name:var(--font-display)] text-white md:py-32"
     >
-      <div className="mb-14 flex flex-col gap-8 md:mb-24 md:flex-row md:items-end md:justify-between">
-        <div>
-          <h2 className="text-[clamp(3rem,9vw,8rem)] font-medium leading-[0.92] tracking-[-0.04em]">
-            Recent projects
-          </h2>
-          <p className="mt-6 max-w-md text-base text-[#EDEBE6]/55">
-            <span className="hidden lg:inline">Hover a project to preview it, click to open the live site.</span>
-            <span className="lg:hidden">Tap a project to open the live site.</span>
-          </p>
-        </div>
-
-        <div className="hidden gap-6 text-sm lg:flex" role="group" aria-label="Layout">
-          {(["list", "grid"] as const).map((v) => (
-            <button
-              key={v}
-              type="button"
-              aria-pressed={view === v}
-              onClick={() => setView(v)}
-              className={`cursor-pointer transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#B6C0FF] ${
-                view === v ? "text-[#EDEBE6]" : "text-[#EDEBE6]/40 hover:text-[#EDEBE6]/70"
-              }`}
-            >
-              {v === "list" ? "List" : "Grid"}
-            </button>
-          ))}
-        </div>
+      <div className="mb-12 flex flex-col gap-6 md:mb-20 md:flex-row md:items-end md:justify-between">
+        <h2 className="heading !m-0 !text-left">
+          Recent <span className="gradient-animated">projects</span>
+        </h2>
+        <p className="max-w-xs text-sm leading-relaxed text-white/50">
+          The four builds I&apos;d put first, then the rest of the shelf. Every
+          project opens as a live site.
+        </p>
       </div>
 
-      {/* List view (desktop): rows with a cursor-following preview */}
-      <div
-        className={view === "list" ? "hidden lg:block" : "hidden"}
-        onMouseMove={follow}
-        onMouseLeave={() => setActive(-1)}
-      >
-        <ul className="border-b border-[#EDEBE6]/15">
-          {projects.map((p, i) => (
-            <li key={p.name} className="border-t border-[#EDEBE6]/15">
+      <div ref={stackRef}>
+        {featured.map((p, i) => (
+          <Card
+            key={p.name}
+            p={p}
+            i={i}
+            total={featured.length}
+            progress={scrollYProgress}
+            reduce={reduce}
+          />
+        ))}
+      </div>
+
+      <div className="mt-16 md:mt-24">
+        <div className="flex items-baseline justify-between border-b border-white/10 pb-4">
+          <h3 className="text-lg font-medium tracking-tight">More builds</h3>
+          <span className="font-mono text-xs text-white/40">
+            {pad(more.length)} projects
+          </span>
+        </div>
+        <ul>
+          {more.map((p, i) => (
+            <li key={p.name} className="border-b border-white/10">
               <a
                 href={p.link}
                 target="_blank"
                 rel="noreferrer"
-                onMouseEnter={() => setActive(i)}
-                className={`group flex items-baseline justify-between gap-10 py-9 transition-opacity duration-500 motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#B6C0FF] ${
-                  active !== -1 && active !== i ? "opacity-25" : "opacity-100"
-                }`}
+                className={`group grid grid-cols-[auto_1fr_auto] items-center gap-4 px-2 py-4 transition-colors hover:bg-white/[0.03] sm:grid-cols-[2rem_auto_1fr_auto] sm:gap-6 ${focusRing} focus-visible:outline-offset-[-2px]`}
               >
-                <span
-                  className={`text-[clamp(2.75rem,6.5vw,6rem)] font-medium leading-none tracking-[-0.035em] transition-[transform,color] duration-500 ${ease} motion-reduce:transition-none group-hover:translate-x-6 group-hover:text-[#B6C0FF]`}
-                >
-                  {p.name}
+                <span className="hidden font-mono text-xs text-white/35 sm:block">
+                  {pad(featured.length + i + 1)}
                 </span>
-                <span className="shrink-0 text-right text-sm leading-relaxed text-[#EDEBE6]/50">
-                  {p.kind}
-                  <br />
-                  {p.stack.join(", ")}
+                <span className="relative block h-12 w-20 overflow-hidden rounded-sm bg-white/5 sm:h-14 sm:w-24">
+                  <Image
+                    src={p.image}
+                    alt=""
+                    fill
+                    sizes="96px"
+                    className="object-cover object-top"
+                  />
                 </span>
+                <span className="min-w-0">
+                  <span className="block truncate text-lg font-medium tracking-tight transition-colors group-hover:text-purple-300 sm:text-xl">
+                    {p.name}
+                  </span>
+                  <span className="block truncate text-sm text-white/45">
+                    {p.kind}
+                    <span className="hidden sm:inline">
+                      {" "}
+                      · {p.stack.join(", ")}
+                    </span>
+                  </span>
+                </span>
+                <Arrow className="text-white/40 transition-[transform,color] duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-purple-300 motion-reduce:transition-none" />
               </a>
             </li>
           ))}
         </ul>
-      </div>
-
-      {/* Grid view (always on tablet and mobile) */}
-      <div
-        className={`grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 ${
-          view === "list" ? "lg:hidden" : "lg:grid-cols-3"
-        }`}
-      >
-        {projects.map((p) => (
-          <a
-            key={p.name}
-            href={p.link}
-            target="_blank"
-            rel="noreferrer"
-            className="group block focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-[#B6C0FF]"
-          >
-            <div className="relative aspect-[16/10] overflow-hidden rounded-md bg-[#EDEBE6]/5">
-              <Image
-                src={p.image}
-                alt={`${p.name} screenshot`}
-                fill
-                sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
-                className={`object-cover transition-transform duration-[900ms] ${ease} motion-reduce:transition-none group-hover:scale-[1.04]`}
-              />
-            </div>
-            <div className="mt-5 flex items-baseline justify-between gap-4">
-              <h3 className="text-2xl font-medium tracking-[-0.02em]">{p.name}</h3>
-              <span className="shrink-0 text-sm text-[#EDEBE6]/50">{p.kind}</span>
-            </div>
-            <p className="mt-1 text-sm text-[#EDEBE6]/40">{p.stack.join(", ")}</p>
-          </a>
-        ))}
-      </div>
-
-      {/* Preview that follows the cursor; images sit in a vertical strip */}
-      <div
-        ref={preview}
-        aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-50 hidden lg:block"
-      >
-        <div
-          className={`h-[300px] w-[440px] overflow-hidden rounded-md ring-1 ring-[#EDEBE6]/15 transition-[transform,opacity] duration-500 ${ease} motion-reduce:transition-none ${
-            active >= 0 ? "scale-100 opacity-100" : "scale-50 opacity-0"
-          }`}
-        >
-          <div
-            className="h-full transition-transform duration-700 ease-[cubic-bezier(.76,0,.24,1)] motion-reduce:transition-none"
-            style={{ transform: `translateY(-${Math.max(active, 0) * 100}%)` }}
-          >
-            {projects.map((p) => (
-              <div key={p.name} className="relative h-[300px] w-full">
-                <Image src={p.image} alt="" fill sizes="440px" loading="eager" className="object-cover" />
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
