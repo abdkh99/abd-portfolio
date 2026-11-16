@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque } from "next/font/google";
+import {
+  Bricolage_Grotesque,
+  Instrument_Serif,
+  Manrope,
+} from "next/font/google";
 import "./globals.css";
 
 import { ThemeProvider } from "@/components/theme-provider";
-import IntroPreloader from "@/components/IntroPreloader";
 
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -11,6 +14,20 @@ const bricolage = Bricolage_Grotesque({
   display: "swap",
   variable: "--font-display",
   fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
+});
+
+const instrument = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-serif",
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
@@ -24,7 +41,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={bricolage.variable} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${bricolage.variable} ${instrument.variable} ${manrope.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         {/* Returning visitors in the same session: hide the intro before first paint */}
         <script
@@ -35,7 +56,6 @@ export default function RootLayout({
         <link rel="icon" href="/boy.png" type="image/png" />
       </head>
       <body>
-        <IntroPreloader initials="A" tagline="Crafting Digital Experiences" />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
