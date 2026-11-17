@@ -15,8 +15,8 @@ export function Button({
   as: Component = "button",
   containerClassName,
   borderClassName,
-  duration = 5000,
-  glowColor = "#c084fc",
+  duration = 6000,
+  glowColor = "#d6b370",
   className,
   ...otherProps
 }: {
@@ -36,7 +36,7 @@ export function Button({
     <Component
       className={cn(
         "bg-transparent relative text-xl p-[1px] overflow-hidden md:col-span-2",
-        containerClassName
+        containerClassName,
       )}
       style={{
         borderRadius: borderRadius,
@@ -69,8 +69,8 @@ export function Button({
 
       <div
         className={cn(
-          "relative flex h-full w-full items-center justify-center border-slate-800 bg-slate-900/[0.8] text-sm text-white antialiased backdrop-blur-lg border-2",
-          className
+          "relative flex h-full w-full items-center justify-center border-[#d6b370] bg-[#d6b370]/0.01 text-sm text-white antialiased backdrop-blur-lg border-2",
+          className,
         )}
         style={{
           borderRadius: `${brNum * 0.96}rem`,

@@ -29,7 +29,7 @@ const Experience = () => {
               boxShadow: `0 0 20px rgba(0,0,0,0.1)`,
               borderRadius: `calc(1.75rem* 0.96)`,
             }}
-            className="flex-1 text-fg border-line"
+            className="flex-1 text-ac border-line"
           >
             <div className="flex lg:flex-row flex-col lg:items-center p-3 py-6 md:p-5 lg:p-10 gap-2">
               <Image
@@ -43,7 +43,7 @@ const Experience = () => {
                 <h1 className="font-display text-start text-2xl md:text-3xl font-normal tracking-tight">
                   {card.title}
                 </h1>
-                <p className="text-start text-mute mt-3 font-medium">
+                <p className="text-start text-fg mt-3 font-medium">
                   {card.desc}
                 </p>
               </div>
