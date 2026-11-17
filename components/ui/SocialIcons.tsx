@@ -14,7 +14,7 @@ const SocialIcons = () => {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://www.linkedin.com/in/abdullah-kh-a8105735b/"
+            href="https://www.linkedin.com/in/abdullah-khazna-katbi-a8105735b/"
             aria-label="LinkedIn"
             data-social="linkedin"
           >
