@@ -3,20 +3,12 @@ import React from "react";
 
 import { AnimatePresence, motion } from "motion/react";
 import { CanvasRevealEffect } from "@/components/ui/CanvasRevealEffect";
-import { TextShimmer } from "./ui/TextShimmerComponent";
 const Approuch = () => {
   return (
     <>
       <section className="w-full py-20">
         <h1 className="heading ">
-          My{" "}
-          <TextShimmer
-            spread={5}
-            duration={2.2}
-            className="font-bold  [--base-color:var(--color-purple-900)] [--base-gradient-color:var(--color-purple-600)] "
-          >
-            approach
-          </TextShimmer>
+          My <span className="accent-text">approach</span>
         </h1>
         <div className="my-20 flex flex-col lg:flex-row items-center justify-center gap-4">
           <Card
@@ -26,7 +18,8 @@ const Approuch = () => {
           >
             <CanvasRevealEffect
               animationSpeed={5.1}
-              containerClassName="bg-emerald-900"
+              containerClassName="bg-panel"
+              colors={[[214, 179, 112]]}
             />
           </Card>
           <Card
@@ -36,15 +29,15 @@ const Approuch = () => {
           >
             <CanvasRevealEffect
               animationSpeed={3}
-              containerClassName="bg-black"
+              containerClassName="bg-panel"
               colors={[
-                [236, 72, 153],
-                [232, 121, 249],
+                [214, 179, 112],
+                [236, 235, 230],
               ]}
               dotSize={2}
             />
             {/* Radial gradient for the cute fade */}
-            <div className="absolute inset-0 [mask-image:radial-gradient(400px_at_center,white,transparent)]  bg-black/90" />
+            <div className="absolute inset-0 [mask-image:radial-gradient(400px_at_center,white,transparent)] bg-page/90" />
           </Card>
           <Card
             title="Development & Launch"
@@ -53,8 +46,9 @@ const Approuch = () => {
           >
             <CanvasRevealEffect
               animationSpeed={3}
-              containerClassName="bg-sky-600"
-              colors={[[125, 211, 252]]}
+              containerClassName="bg-panel"
+              colors={[[214, 179, 112]]}
+              dotSize={4}
             />
           </Card>
         </div>
@@ -80,12 +74,12 @@ const Card = ({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={() => setHovered(!hovered)}
-      className="border border-white/[0.2] group/canvas-card flex items-center justify-center max-w-sm w-full mx-auto p-4 relative lg:h-[35rem] h-[25rem] rounded-3xl cursor-pointer"
+      className="border border-line-strong group/canvas-card flex items-center justify-center max-w-sm w-full mx-auto p-4 relative lg:h-[35rem] h-[25rem] rounded-3xl cursor-pointer"
     >
-      <Icon className="absolute h-6 w-6 -top-3 -left-3  text-white" />
-      <Icon className="absolute h-6 w-6 -bottom-3 -left-3  text-white" />
-      <Icon className="absolute h-6 w-6 -top-3 -right-3  text-white" />
-      <Icon className="absolute h-6 w-6 -bottom-3 -right-3  text-white" />
+      <Icon className="absolute h-6 w-6 -top-3 -left-3  text-fg" />
+      <Icon className="absolute h-6 w-6 -bottom-3 -left-3  text-fg" />
+      <Icon className="absolute h-6 w-6 -top-3 -right-3  text-fg" />
+      <Icon className="absolute h-6 w-6 -bottom-3 -right-3  text-fg" />
 
       <AnimatePresence>
         {hovered && (
@@ -112,7 +106,7 @@ const Card = ({
           {icon}
         </motion.div>
         <motion.h2
-          className=" relative z-10  mt-4 font-bold text-white text-center text-xl sm:text-2xl md:text-3xl px-4"
+          className="font-display relative z-10 mt-4 font-normal tracking-tight text-fg text-center text-2xl sm:text-3xl md:text-4xl px-4"
           animate={{
             opacity: hovered ? 1 : 0,
             y: hovered ? 0 : 20,
@@ -122,8 +116,7 @@ const Card = ({
           {title}
         </motion.h2>
         <motion.p
-          className="text-sm  relative z-10  mt-4 font-medium text-white text-center px-4"
-          style={{ color: "#e4ecff" }}
+          className="text-sm relative z-10 mt-4 font-medium text-fg/80 text-center px-4"
           animate={{
             opacity: hovered ? 1 : 0,
             y: hovered ? 0 : 20,
@@ -140,9 +133,9 @@ const Card = ({
 const AceternityIcon = ({ order }: { order: string }) => {
   return (
     <div>
-      <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 ">
-        <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)] " />
-        <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-5 py-4 font-bold  text-white backdrop-blur-3xl text-2xl">
+      <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus-visible:ring-2 focus-visible:ring-fg focus-visible:ring-offset-2 focus-visible:ring-offset-page ">
+        <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#d6b370_0%,#131316_50%,#d6b370_100%)] " />
+        <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-panel px-5 py-4 font-display font-normal text-fg backdrop-blur-3xl text-2xl">
           {order}
         </span>
       </button>

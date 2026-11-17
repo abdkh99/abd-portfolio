@@ -1,8 +1,6 @@
 "use client";
-import { FaLocationArrow } from "react-icons/fa6";
-import Link from "next/link";
+
 import Image from "next/image";
-import MagicButton from "@/components/ui/MagicButton";
 import RotatingText from "./ui/RotatingText";
 import { motion } from "motion/react";
 import { TextShimmer } from "./ui/TextShimmerComponent";
@@ -27,8 +25,8 @@ const Footer = () => {
             <span className="-translate-y-5 inline-block mb-4">Ready to take your</span>{" "}
             <div className="inline-block -translate-y-5">
               <RotatingText
-                texts={["professional", "brand", "Web", "Modern"]}
-                mainClassName=" sm:px-2 md:px-3 bg-purple-600 text-white overflow-hidden  sm:py-2 md:py-2 justify-center rounded-lg "
+                texts={["professional ", "brand", "Web ", "Modern"]}
+                mainClassName=" sm:px-2 md:px-3 bg-ac text-page italic overflow-hidden  sm:py-2 md:py-2 justify-center rounded-lg "
                 staggerFrom={"last"}
                 initial={{ y: "100%", opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -49,31 +47,24 @@ const Footer = () => {
                   damping: 20,
                   stiffness: 200,
                 }}
-                fixedWidths={["w-80", "w-40", "w-35", "w-52"]}
+                fixedWidths={["w-80", "w-52", "w-40", "w-52"]}
               />
             </div>
             <br />
             presence to the next level?
           </h1>
 
-          <p className="text-gray-400 md:mt-10 my-5 text-center">
+          <p className="text-mute md:mt-10 my-5 text-center">
             Reach out to me today and let&apos;s discuss how I can help you
             achieve your goals.
           </p>
-          <Link href=".">
-            <MagicButton
-              title="Let's get in touch"
-              icon={<FaLocationArrow />}
-              position="right"
-            />
-          </Link>
         </motion.div>
         <div className="flex mt-16 md:flex-row flex-col justify-between items-center">
           <div className="md:text-base text-sm md:font-normal font-light ">
             <TextShimmer
               spread={22}
               duration={3}
-              className="font-bold [--base-color:var(--color-gray-600)] [--base-gradient-color:var(--color-gray-100)] dark:[--base-color:var(--color-gray-600)] dark:[--base-gradient-color:var(--color-white)] 
+              className="font-medium [--base-color:var(--color-mute)] [--base-gradient-color:var(--color-fg)]
               max-sm:-translate-y-6"
             >
               {" "}

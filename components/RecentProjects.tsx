@@ -123,7 +123,7 @@ function Arrow({ className = "" }: { className?: string }) {
 }
 
 const focusRing =
-  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-purple-400";
+  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ac";
 
 function Card({
   p,
@@ -163,33 +163,33 @@ function Card({
     >
       <motion.article
         style={{ scale }}
-        className="grid origin-top overflow-hidden rounded-lg border border-white/10 bg-[#05071d] lg:h-[min(32rem,calc(100svh-10.5rem))] lg:grid-cols-[5fr_7fr]"
+        className="grid origin-top overflow-hidden rounded-lg border border-line bg-panel lg:h-[min(32rem,calc(100svh-10.5rem))] lg:grid-cols-[5fr_7fr]"
       >
         <div className="order-2 flex flex-col justify-between gap-10 p-6 sm:p-8 lg:order-1 lg:p-10">
           <div>
-            <div className="flex items-center justify-between font-mono text-xs tracking-wider text-white/40">
+            <div className="flex items-center justify-between font-mono text-xs tracking-wider text-fg/40">
               <span>
                 {pad(i + 1)} / {pad(total)}
               </span>
               <span className="uppercase">{p.kind}</span>
             </div>
-            <h3 className="mt-6 text-[clamp(2.25rem,4.2vw,4rem)] font-medium leading-[0.95] tracking-[-0.035em] text-white">
+            <h3 className="font-display mt-6 text-[clamp(2.5rem,4.6vw,4.5rem)] font-normal leading-[0.95] tracking-[-0.025em] text-fg">
               {p.name}
             </h3>
-            <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-white/60">
+            <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-fg/60">
               {p.summary}
             </p>
           </div>
 
           <div>
-            <p className="font-mono text-xs leading-relaxed text-white/40">
+            <p className="font-mono text-xs leading-relaxed text-fg/40">
               {p.stack.join("  /  ")}
             </p>
             <a
               href={p.link}
               target="_blank"
               rel="noreferrer"
-              className={`group/cta mt-5 inline-flex items-center gap-2 border-b border-white/30 pb-1 text-sm font-medium text-white transition-colors hover:border-purple-400 hover:text-purple-300 ${focusRing}`}
+              className={`group/cta mt-5 inline-flex items-center gap-2 border-b border-fg/30 pb-1 text-sm font-medium text-fg transition-colors hover:border-ac hover:text-ac ${focusRing}`}
             >
               View live site
               <Arrow className="transition-transform duration-300 group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5 motion-reduce:transition-none" />
@@ -204,15 +204,15 @@ function Card({
             rel="noreferrer"
             tabIndex={-1}
             aria-hidden
-            className="group flex flex-col overflow-hidden rounded-md border border-white/10 bg-[#000319] lg:h-full"
+            className="group flex flex-col overflow-hidden rounded-md border border-line bg-page lg:h-full"
           >
-            <div className="flex items-center gap-3 border-b border-white/10 px-4 py-2.5">
+            <div className="flex items-center gap-3 border-b border-line px-4 py-2.5">
               <span className="flex gap-1.5" aria-hidden>
-                <i className="size-2 rounded-full bg-white/15" />
-                <i className="size-2 rounded-full bg-white/15" />
-                <i className="size-2 rounded-full bg-white/15" />
+                <i className="size-2 rounded-full bg-fg/15" />
+                <i className="size-2 rounded-full bg-fg/15" />
+                <i className="size-2 rounded-full bg-fg/15" />
               </span>
-              <span className="min-w-0 flex-1 truncate rounded bg-white/[0.04] px-3 py-1 font-mono text-[11px] text-white/45">
+              <span className="min-w-0 flex-1 truncate rounded bg-fg/[0.04] px-3 py-1 font-mono text-[11px] text-fg/45">
                 {host(p.link)}
               </span>
             </div>
@@ -248,13 +248,13 @@ export default function RecentProjects() {
   return (
     <section
       id="projects"
-      className="py-20 font-[family-name:var(--font-display)] text-white md:py-32"
+      className="py-20 text-fg md:py-32"
     >
       <div className="mb-12 flex flex-col gap-6 md:mb-20 md:flex-row md:items-end md:justify-between">
         <h2 className="heading !m-0 !text-left">
-          Recent <span className="gradient-animated">projects</span>
+          Recent <span className="accent-text">projects</span>
         </h2>
-        <p className="max-w-xs text-sm leading-relaxed text-white/50">
+        <p className="max-w-xs text-sm leading-relaxed text-fg/50">
           The four builds I&apos;d put first, then the rest of the shelf. Every
           project opens as a live site.
         </p>
@@ -274,25 +274,25 @@ export default function RecentProjects() {
       </div>
 
       <div className="mt-16 md:mt-24">
-        <div className="flex items-baseline justify-between border-b border-white/10 pb-4">
-          <h3 className="text-lg font-medium tracking-tight">More builds</h3>
-          <span className="font-mono text-xs text-white/40">
+        <div className="flex items-baseline justify-between border-b border-line pb-4">
+          <h3 className="font-display text-2xl font-normal tracking-tight">More builds</h3>
+          <span className="font-mono text-xs text-fg/40">
             {pad(more.length)} projects
           </span>
         </div>
         <ul>
           {more.map((p, i) => (
-            <li key={p.name} className="border-b border-white/10">
+            <li key={p.name} className="border-b border-line">
               <a
                 href={p.link}
                 target="_blank"
                 rel="noreferrer"
-                className={`group grid grid-cols-[auto_1fr_auto] items-center gap-4 px-2 py-4 transition-colors hover:bg-white/[0.03] sm:grid-cols-[2rem_auto_1fr_auto] sm:gap-6 ${focusRing} focus-visible:outline-offset-[-2px]`}
+                className={`group grid grid-cols-[auto_1fr_auto] items-center gap-4 px-2 py-4 transition-colors hover:bg-fg/[0.03] sm:grid-cols-[2rem_auto_1fr_auto] sm:gap-6 ${focusRing} focus-visible:outline-offset-[-2px]`}
               >
-                <span className="hidden font-mono text-xs text-white/35 sm:block">
+                <span className="hidden font-mono text-xs text-fg/35 sm:block">
                   {pad(featured.length + i + 1)}
                 </span>
-                <span className="relative block h-12 w-20 overflow-hidden rounded-sm bg-white/5 sm:h-14 sm:w-24">
+                <span className="relative block h-12 w-20 overflow-hidden rounded-sm bg-fg/5 sm:h-14 sm:w-24">
                   <Image
                     src={p.image}
                     alt=""
@@ -302,10 +302,10 @@ export default function RecentProjects() {
                   />
                 </span>
                 <span className="min-w-0">
-                  <span className="block truncate text-lg font-medium tracking-tight transition-colors group-hover:text-purple-300 sm:text-xl">
+                  <span className="font-display block truncate text-2xl font-normal tracking-tight transition-colors group-hover:text-ac sm:text-[1.75rem]">
                     {p.name}
                   </span>
-                  <span className="block truncate text-sm text-white/45">
+                  <span className="block truncate text-sm text-fg/45">
                     {p.kind}
                     <span className="hidden sm:inline">
                       {" "}
@@ -313,7 +313,7 @@ export default function RecentProjects() {
                     </span>
                   </span>
                 </span>
-                <Arrow className="text-white/40 transition-[transform,color] duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-purple-300 motion-reduce:transition-none" />
+                <Arrow className="text-fg/40 transition-[transform,color] duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ac motion-reduce:transition-none" />
               </a>
             </li>
           ))}

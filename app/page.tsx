@@ -17,7 +17,7 @@ export default function Home() {
     <>
       <SmoothScroll />
       <ScrollProgressBar height="h-1" blur/>
-      <main className="relative bg-black-100 flex justify-center items-center flex-col overflow-clip mx-auto sm:px-10 px-5">
+      <main className="relative bg-page flex justify-center items-center flex-col overflow-clip mx-auto sm:px-10 px-5">
         <div className="max-w-[1500px] w-full">
           <FloatingNav navItems={navItems} />
           <Hero />

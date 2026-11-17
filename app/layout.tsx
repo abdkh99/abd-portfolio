@@ -1,20 +1,8 @@
 import type { Metadata } from "next";
-import {
-  Bricolage_Grotesque,
-  Instrument_Serif,
-  Manrope,
-} from "next/font/google";
+import { Instrument_Serif, Manrope } from "next/font/google";
 import "./globals.css";
 
 import { ThemeProvider } from "@/components/theme-provider";
-
-const bricolage = Bricolage_Grotesque({
-  subsets: ["latin"],
-  axes: ["opsz"],
-  display: "swap",
-  variable: "--font-display",
-  fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
-});
 
 const instrument = Instrument_Serif({
   subsets: ["latin"],
@@ -43,7 +31,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${bricolage.variable} ${instrument.variable} ${manrope.variable}`}
+      className={`${instrument.variable} ${manrope.variable}`}
       suppressHydrationWarning
     >
       <head>

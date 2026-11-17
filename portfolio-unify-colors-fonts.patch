@@ -1,0 +1,1074 @@
+diff --git a/app/globals.css b/app/globals.css
+index bf325e7..1d8dd0e 100644
+--- a/app/globals.css
++++ b/app/globals.css
+@@ -1,27 +1,20 @@
+ @import "tailwindcss";
+-/* إذا بدك تضيف أي @layer أو متغيرات: */
+-@layer base {
+-  :root {
+-    --black-100: #000319;
+-    --background-elevated: #060010;
+-    --background-card: rgb(4, 7, 29);
+-    --border-strong: #392e4e;
+-    --accent-primary: #9333ea;
+-    --accent-primary-soft: #9b3cc7;
+-    --text-muted: #9ca3af;
+-  }
+-  /* لو بدك تستخدم الـ CSS var بدل الكلاسات: */
+-  /* body { background-color: var(--black-100); } */
+-}
+ 
+-@layer utilities {
+-  /* لو حابب تضيف utils إضافية: */
+-  .bg-black-100 {
+-    background-color: var(--black-100);
+-  }
+-  .text-black-100 {
+-    color: var(--black-100);
+-  }
++/* ------------------------------------------------------------------
++   Design tokens: taken from the Hero. Change a colour here and the whole
++   site follows. Tailwind utilities: bg-page, bg-panel, text-fg, text-mute,
++   text-ac, border-line, border-line-strong (all accept /opacity).
++   Fonts: --font-serif (Instrument Serif) for display, --font-sans (Manrope)
++   for body. They are loaded in app/layout.tsx.
++------------------------------------------------------------------- */
++@theme static {
++  --color-page: #0c0c0e;
++  --color-panel: #131316;
++  --color-fg: #ecebe6;
++  --color-mute: #8c8c92;
++  --color-ac: #d6b370;
++  --color-line: rgb(255 255 255 / 0.1);
++  --color-line-strong: rgb(255 255 255 / 0.2);
+ }
+ 
+ @theme inline {
+@@ -71,17 +64,39 @@
+   }
+ }
+ 
+-:root, html, body {
+-  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
++html {
++  background: var(--color-page);
++}
++body {
++  background: var(--color-page);
++  color: var(--color-fg);
++  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system,
++    "Segoe UI", sans-serif;
++  -webkit-font-smoothing: antialiased;
++}
++::selection {
++  background: var(--color-ac);
++  color: var(--color-page);
+ }
+ 
+ @layer utilities {
++  /* Section titles: same serif as the Hero title */
+   .heading {
+-    @apply font-bold text-4xl md:text-5xl text-center text-white;
++    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
++    font-weight: 400;
++    font-size: clamp(2.5rem, 5vw, 4.25rem);
++    line-height: 1.05;
++    letter-spacing: -0.025em;
++    text-align: center;
++    color: var(--color-fg);
+   }
+-
+-  .black-gradient {
+-    background: linear-gradient(90deg, #161a31 0%, #06091f 100%);
++  .font-display {
++    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
++  }
++  /* The one highlighted phrase in a title: italic + the accent colour */
++  .accent-text {
++    color: var(--color-ac);
++    font-style: italic;
+   }
+ }
+ 
+@@ -95,32 +110,6 @@
+     }
+   }
+ }
+-.text-purple {
+-  color: purple;
+-}
+-@keyframes gradient-pan {
+-  0% { background-position: 0% 50%; }
+-  50% { background-position: 100% 50%; }
+-  100% { background-position: 0% 50%; }
+-}
+-
+-.gradient-animated {
+-
+-  background: linear-gradient(90deg, #06b6d4, #7c3aed, #ef44ca, #0021b6);
+-  background-size: 300% 300%; 
+-  background-repeat: no-repeat;
+-
+-  -webkit-background-clip: text;
+-  background-clip: text;
+-
+-  color: transparent;
+-  -webkit-text-fill-color: transparent;
+-
+-  animation: gradient-pan 6s linear infinite;
+-
+-  will-change: background-position;
+-}
+-
+ /* Start Social Icon */
+ .example-2 {
+   display: flex;
+@@ -128,7 +117,7 @@
+   align-items: center;
+ }
+ .example-2 .icon-content {
+-  margin: 0 10px;
++  margin: 0 8px;
+   position: relative;
+ }
+ .example-2 .icon-content .tooltip {
+@@ -136,12 +125,14 @@
+   top: -30px;
+   left: 50%;
+   transform: translateX(-50%);
+-  color: #fff;
++  color: var(--color-fg);
++  background: var(--color-panel);
++  border: 1px solid var(--color-line);
+   padding: 6px 10px;
+-  border-radius: 5px;
++  border-radius: 8px;
+   opacity: 0;
+   visibility: hidden;
+-  font-size: 14px;
++  font-size: 13px;
+   transition: all 0.3s ease;
+ }
+ .example-2 .icon-content:hover .tooltip {
+@@ -155,24 +146,27 @@
+   display: flex;
+   justify-content: center;
+   align-items: center;
+-  width: 50px;
+-  height: 50px;
++  width: 48px;
++  height: 48px;
+   border-radius: 50%;
+-  color: #4d4d4d;
+-  background-color: #ffffff;
+-  transition: all 0.3s ease-in-out;
++  color: var(--color-fg);
++  background-color: var(--color-panel);
++  border: 1px solid var(--color-line);
++  transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+ }
+ .example-2 .icon-content a:hover {
+-  box-shadow: 3px 2px 45px 0px rgb(0 0 0 / 12%);
++  color: var(--color-page);
++  border-color: var(--color-ac);
++}
++.example-2 .icon-content a:focus-visible {
++  outline: 2px solid var(--color-fg);
++  outline-offset: 3px;
+ }
+ .example-2 .icon-content a svg {
+   position: relative;
+   z-index: 1;
+-  width: 30px;
+-  height: 30px;
+-}
+-.example-2 .icon-content a:hover {
+-  color: white;
++  width: 22px;
++  height: 22px;
+ }
+ .example-2 .icon-content a .filled {
+   position: absolute;
+@@ -181,36 +175,10 @@
+   left: 0;
+   width: 100%;
+   height: 0;
+-  background-color: #000;
++  background-color: var(--color-ac);
+   transition: all 0.3s ease-in-out;
+ }
+ .example-2 .icon-content a:hover .filled {
+   height: 100%;
+ }
+-
+-.example-2 .icon-content a[data-social="linkedin"] .filled,
+-.example-2 .icon-content a[data-social="linkedin"] ~ .tooltip {
+-  background-color: #0274b3;
+-}
+-
+-.example-2 .icon-content a[data-social="github"] .filled,
+-.example-2 .icon-content a[data-social="github"] ~ .tooltip {
+-  background-color: #24262a;
+-}
+-.example-2 .icon-content a[data-social="instagram"] .filled,
+-.example-2 .icon-content a[data-social="instagram"] ~ .tooltip {
+-  background: linear-gradient(
+-    45deg,
+-    #405de6,
+-    #5b51db,
+-    #b33ab4,
+-    #c135b4,
+-    #e1306c,
+-    #fd1f1f
+-  );
+-}
+-.example-2 .icon-content a[data-social="youtube"] .filled,
+-.example-2 .icon-content a[data-social="youtube"] ~ .tooltip {
+-  background-color: #ff0000;
+-}
+-/* End Social Icon */
+\ No newline at end of file
++/* End Social Icon */
+diff --git a/app/layout.tsx b/app/layout.tsx
+index 7e033ca..5cd8aeb 100644
+--- a/app/layout.tsx
++++ b/app/layout.tsx
+@@ -1,21 +1,9 @@
+ import type { Metadata } from "next";
+-import {
+-  Bricolage_Grotesque,
+-  Instrument_Serif,
+-  Manrope,
+-} from "next/font/google";
++import { Instrument_Serif, Manrope } from "next/font/google";
+ import "./globals.css";
+ 
+ import { ThemeProvider } from "@/components/theme-provider";
+ 
+-const bricolage = Bricolage_Grotesque({
+-  subsets: ["latin"],
+-  axes: ["opsz"],
+-  display: "swap",
+-  variable: "--font-display",
+-  fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
+-});
+-
+ const instrument = Instrument_Serif({
+   subsets: ["latin"],
+   weight: "400",
+@@ -43,7 +31,7 @@ export default function RootLayout({
+   return (
+     <html
+       lang="en"
+-      className={`${bricolage.variable} ${instrument.variable} ${manrope.variable}`}
++      className={`${instrument.variable} ${manrope.variable}`}
+       suppressHydrationWarning
+     >
+       <head>
+diff --git a/app/page.tsx b/app/page.tsx
+index dc4da90..0dede7f 100644
+--- a/app/page.tsx
++++ b/app/page.tsx
+@@ -17,7 +17,7 @@ export default function Home() {
+     <>
+       <SmoothScroll />
+       <ScrollProgressBar height="h-1" blur/>
+-      <main className="relative bg-black-100 flex justify-center items-center flex-col overflow-clip mx-auto sm:px-10 px-5">
++      <main className="relative bg-page flex justify-center items-center flex-col overflow-clip mx-auto sm:px-10 px-5">
+         <div className="max-w-[1500px] w-full">
+           <FloatingNav navItems={navItems} />
+           <Hero />
+diff --git a/components/AboutTimeline.module.css b/components/AboutTimeline.module.css
+index c025336..6942c25 100644
+--- a/components/AboutTimeline.module.css
++++ b/components/AboutTimeline.module.css
+@@ -1,12 +1,12 @@
+ .section {
+-  --bg: #000319; --line: #241c45; --edge: #3b2d63; --mute: #a3a8c8; --text: #e4ecff; --ac: #a63fe8; --lilac: #d9a6f5; --soft: rgba(166, 63, 232, 0.14); --label: 150px; --rail: 44px; --node: 12px;
+-  position: relative; width: 100%; padding: 6rem 0 4rem; color: #fff;
++  --bg: var(--color-page); --line: var(--color-line); --edge: var(--color-line-strong); --mute: var(--color-mute); --text: var(--color-fg); --ac: var(--color-ac); --lilac: var(--color-ac); --soft: rgba(214, 179, 112, 0.14); --label: 150px; --rail: 44px; --node: 12px;
++  position: relative; width: 100%; padding: 6rem 0 4rem; color: var(--color-fg);
+ }
+ 
+ /* header */
+ .header { margin-bottom: 3.5rem; text-align: center; }
+-.title { margin: 0; font-weight: 700; font-size: clamp(32px, 4.6vw, 56px); line-height: 1.1; letter-spacing: -0.04em; }
+-.title span { color: var(--ac); }
++.title { margin: 0; font: 400 clamp(40px, 5vw, 68px) / 1.05 var(--font-serif), Georgia, "Times New Roman", serif; letter-spacing: -0.025em; }
++.title span { color: var(--ac); font-style: italic; }
+ .sub { margin: 16px auto 0; max-width: 46ch; color: var(--mute); font-size: clamp(15px, 1.4vw, 18px); line-height: 1.6; }
+ 
+ /* timeline: label, rail and content on one row */
+@@ -19,36 +19,36 @@
+ .row:last-child { padding-bottom: 0; }
+ 
+ .label { grid-column: 1; margin-top: 41px; padding-right: 6px; text-align: right; color: var(--mute); font-size: 15px; font-weight: 500; line-height: 24px; letter-spacing: -0.01em; transition: color 0.4s; }
+-.on .label { color: #fff; }
++.on .label { color: var(--text); }
+ 
+ .node { position: absolute; z-index: 1; left: calc(var(--label) + var(--rail) / 2 - var(--node) / 2); top: 47px; width: var(--node); height: var(--node); border-radius: 50%; background: var(--bg); border: 2px solid var(--edge); transition: background 0.4s, border-color 0.4s, box-shadow 0.4s; }
+ .on .node { background: var(--ac); border-color: var(--ac); }
+-.cur .node { box-shadow: 0 0 0 5px rgba(166, 63, 232, 0.22); }
++.cur .node { box-shadow: 0 0 0 5px rgba(214, 179, 112, 0.22); }
+ 
+ /* every entry has the same anatomy: text on the left, a dotted well on the right */
+ .card {
+   --mx: 50%; --my: 0%;
+   grid-column: 3; position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: stretch; gap: 40px; padding: 36px; overflow: hidden;
+   border-radius: 28px; border: 1px solid var(--line);
+-  background: radial-gradient(520px circle at 0% 0%, rgba(166, 63, 232, 0.1), transparent 60%), linear-gradient(160deg, #070a24, #05061a);
++  background: radial-gradient(520px circle at 0% 0%, rgba(214, 179, 112, 0.07), transparent 60%), var(--color-panel);
+   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+   transition: border-color 0.35s;
+ }
+ .card::before {
+   content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity 0.35s;
+-  background: radial-gradient(380px circle at var(--mx) var(--my), rgba(166, 63, 232, 0.16), transparent 65%);
++  background: radial-gradient(380px circle at var(--mx) var(--my), rgba(214, 179, 112, 0.1), transparent 65%);
+ }
+-.card:hover { border-color: #4a2a78; }
++.card:hover { border-color: rgba(214, 179, 112, 0.35); }
+ .card:hover::before { opacity: 1; }
+-.cur .card { border-color: #5b2f94; }
++.cur .card { border-color: rgba(214, 179, 112, 0.5); }
+ 
+-.text h3 { margin: 0; font-weight: 600; font-size: clamp(22px, 2.2vw, 28px); line-height: 1.2; letter-spacing: -0.03em; }
++.text h3 { margin: 0; font: 400 clamp(30px, 2.9vw, 40px) / 1.08 var(--font-serif), Georgia, "Times New Roman", serif; letter-spacing: -0.02em; }
+ .text p { margin: 14px 0 0; max-width: 40ch; color: var(--mute); font-size: 16px; line-height: 1.65; }
+ 
+ .well {
+   display: flex; flex-direction: column; justify-content: center; gap: 20px; padding: 26px; min-height: 210px;
+   border-radius: 20px; border: 1px solid var(--line);
+-  background: radial-gradient(rgba(166, 63, 232, 0.2) 0.8px, transparent 1px) 0 0 / 18px 18px, rgba(0, 0, 3, 0.35);
++  background: radial-gradient(rgba(214, 179, 112, 0.22) 0.8px, transparent 1px) 0 0 / 18px 18px, rgba(0, 0, 0, 0.25);
+ }
+ 
+ /* 1. time zones */
+@@ -57,14 +57,14 @@
+ .clocks > div:last-child { text-align: right; }
+ .clocks small { color: var(--mute); font-size: 13px; }
+ .clocks b { font-weight: 500; font-size: clamp(32px, 3.4vw, 44px); line-height: 1.1; letter-spacing: -0.045em; font-variant-numeric: tabular-nums; }
+-.diff { padding: 5px 12px; border-radius: 999px; border: 1px solid var(--edge); background: rgba(0, 3, 25, 0.7); color: var(--text); font-size: 13px; text-align: center; }
++.diff { padding: 5px 12px; border-radius: 999px; border: 1px solid var(--edge); background: rgba(12, 12, 14, 0.7); color: var(--text); font-size: 13px; text-align: center; }
+ .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+-.chip { font: inherit; font-size: 14px; color: var(--text); background: rgba(0, 3, 25, 0.6); border: 1px solid var(--edge); border-radius: 999px; padding: 6px 14px; cursor: pointer; transition: background 0.2s, border-color 0.2s; }
++.chip { font: inherit; font-size: 14px; color: var(--text); background: rgba(12, 12, 14, 0.6); border: 1px solid var(--edge); border-radius: 999px; padding: 6px 14px; cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+ .chip:hover { border-color: var(--ac); }
+-.chip[aria-pressed="true"] { background: var(--ac); border-color: var(--ac); color: #fff; }
+-.chip:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
++.chip[aria-pressed="true"] { background: var(--ac); border-color: var(--ac); color: var(--color-page); }
++.chip:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 3px; }
+ .range { margin: 0; font-size: 16px; line-height: 1.5; color: var(--text); }
+-.range b { font-weight: 600; color: #fff; }
++.range b { font-weight: 600; color: var(--color-fg); }
+ 
+ /* 2. steps */
+ .steps { list-style: none; margin: 0; padding: 0; }
+@@ -72,7 +72,7 @@
+ .steps li:not(:last-child)::before { content: ""; position: absolute; left: 11px; top: 33px; bottom: -9px; width: 2px; background: var(--line); }
+ .steps .done:not(:last-child)::before { background: var(--ac); }
+ .dot { position: relative; z-index: 1; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--edge); background: var(--bg); }
+-.dot svg { width: 13px; height: 13px; fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
++.dot svg { width: 13px; height: 13px; fill: none; stroke: var(--color-page); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+ .done .dot { background: var(--ac); border-color: var(--ac); }
+ .now .dot { border-color: var(--ac); }
+ .now .dot::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ac); }
+@@ -82,29 +82,29 @@
+ 
+ /* 3. stack */
+ .pills { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+-.pills li { padding: 8px 16px; border-radius: 999px; border: 1px solid var(--edge); background: rgba(0, 3, 25, 0.7); color: var(--text); font-size: 15px; }
++.pills li { padding: 8px 16px; border-radius: 999px; border: 1px solid var(--edge); background: rgba(12, 12, 14, 0.7); color: var(--text); font-size: 15px; }
+ .pills .learning { border-style: dashed; background: transparent; color: var(--mute); }
+ 
+ /* 4. flow: four dots on one line */
+ .flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+ .flow li { position: relative; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 0 6px; text-align: center; font-size: 15px; font-weight: 500; line-height: 1.35; }
+-.flow i { position: relative; z-index: 1; width: 14px; height: 14px; border-radius: 50%; background: var(--ac); box-shadow: 0 0 0 5px rgba(166, 63, 232, 0.18); }
+-.flow li:not(:last-child)::after { content: ""; position: absolute; top: 6px; left: calc(50% + 14px); right: calc(-50% + 14px); height: 2px; background: linear-gradient(90deg, var(--ac), rgba(166, 63, 232, 0.25)); }
+-.final i { background: #34d399; box-shadow: 0 0 0 5px rgba(52, 211, 153, 0.18); animation: ping 2.6s ease-out infinite; }
+-.final span { color: #7ee2b8; }
+-@keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.55); } 100% { box-shadow: 0 0 0 12px rgba(52, 211, 153, 0); } }
++.flow i { position: relative; z-index: 1; width: 14px; height: 14px; border-radius: 50%; background: var(--ac); box-shadow: 0 0 0 5px rgba(214, 179, 112, 0.18); }
++.flow li:not(:last-child)::after { content: ""; position: absolute; top: 6px; left: calc(50% + 14px); right: calc(-50% + 14px); height: 2px; background: linear-gradient(90deg, var(--ac), rgba(214, 179, 112, 0.25)); }
++.final i { background: var(--ac); box-shadow: 0 0 0 5px rgba(214, 179, 112, 0.18); animation: ping 2.6s ease-out infinite; }
++.final span { color: var(--ac); }
++@keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(214, 179, 112, 0.55); } 100% { box-shadow: 0 0 0 12px rgba(214, 179, 112, 0); } }
+ 
+ /* CTA */
+ .cta {
+   grid-column: 3; display: flex; align-items: center; justify-content: space-between; gap: 24px 40px; padding: 40px 44px; border-radius: 28px;
+-  border: 1px solid #4a2a78; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+-  background: radial-gradient(600px circle at 100% 50%, rgba(166, 63, 232, 0.28), transparent 65%), linear-gradient(120deg, rgba(166, 63, 232, 0.14), rgba(57, 59, 178, 0.1));
++  border: 1px solid rgba(214, 179, 112, 0.35); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
++  background: radial-gradient(600px circle at 100% 50%, rgba(214, 179, 112, 0.14), transparent 65%), var(--color-panel);
+ }
+-.cta h3 { margin: 0; font-weight: 600; font-size: clamp(23px, 2.5vw, 32px); line-height: 1.2; letter-spacing: -0.03em; }
++.cta h3 { margin: 0; font: 400 clamp(30px, 3.2vw, 44px) / 1.08 var(--font-serif), Georgia, "Times New Roman", serif; letter-spacing: -0.02em; }
+ .cta p { margin: 10px 0 0; max-width: 46ch; color: var(--text); font-size: 16px; line-height: 1.6; opacity: 0.85; }
+-.btn { flex: none; display: inline-flex; align-items: center; justify-content: center; padding: 15px 36px; border-radius: 999px; color: #fff; font-size: 16px; font-weight: 600; text-decoration: none; background: linear-gradient(135deg, #b657f0, #8a2fd0); box-shadow: 0 8px 24px -8px rgba(166, 63, 232, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.25); transition: transform 0.2s, box-shadow 0.3s; }
+-.btn:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -8px rgba(166, 63, 232, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.25); }
+-.btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
++.btn { flex: none; display: inline-flex; align-items: center; justify-content: center; padding: 15px 36px; border-radius: 999px; color: var(--color-page); font-size: 16px; font-weight: 600; text-decoration: none; background: var(--color-fg); transition: transform 0.2s, background 0.2s; }
++.btn:hover { transform: translateY(-2px); background: #fff; }
++.btn:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 3px; }
+ 
+ @media (max-width: 960px) {
+   .section { --label: 0px; --rail: 28px; padding-top: 4rem; }
+diff --git a/components/Approach.tsx b/components/Approach.tsx
+index acdb48a..0111290 100644
+--- a/components/Approach.tsx
++++ b/components/Approach.tsx
+@@ -3,20 +3,12 @@ import React from "react";
+ 
+ import { AnimatePresence, motion } from "motion/react";
+ import { CanvasRevealEffect } from "@/components/ui/CanvasRevealEffect";
+-import { TextShimmer } from "./ui/TextShimmerComponent";
+ const Approuch = () => {
+   return (
+     <>
+       <section className="w-full py-20">
+         <h1 className="heading ">
+-          My{" "}
+-          <TextShimmer
+-            spread={5}
+-            duration={2.2}
+-            className="font-bold  [--base-color:var(--color-purple-900)] [--base-gradient-color:var(--color-purple-600)] "
+-          >
+-            approach
+-          </TextShimmer>
++          My <span className="accent-text">approach</span>
+         </h1>
+         <div className="my-20 flex flex-col lg:flex-row items-center justify-center gap-4">
+           <Card
+@@ -26,7 +18,8 @@ const Approuch = () => {
+           >
+             <CanvasRevealEffect
+               animationSpeed={5.1}
+-              containerClassName="bg-emerald-900"
++              containerClassName="bg-panel"
++              colors={[[214, 179, 112]]}
+             />
+           </Card>
+           <Card
+@@ -36,15 +29,15 @@ const Approuch = () => {
+           >
+             <CanvasRevealEffect
+               animationSpeed={3}
+-              containerClassName="bg-black"
++              containerClassName="bg-panel"
+               colors={[
+-                [236, 72, 153],
+-                [232, 121, 249],
++                [214, 179, 112],
++                [236, 235, 230],
+               ]}
+               dotSize={2}
+             />
+             {/* Radial gradient for the cute fade */}
+-            <div className="absolute inset-0 [mask-image:radial-gradient(400px_at_center,white,transparent)]  bg-black/90" />
++            <div className="absolute inset-0 [mask-image:radial-gradient(400px_at_center,white,transparent)] bg-page/90" />
+           </Card>
+           <Card
+             title="Development & Launch"
+@@ -53,8 +46,9 @@ const Approuch = () => {
+           >
+             <CanvasRevealEffect
+               animationSpeed={3}
+-              containerClassName="bg-sky-600"
+-              colors={[[125, 211, 252]]}
++              containerClassName="bg-panel"
++              colors={[[214, 179, 112]]}
++              dotSize={4}
+             />
+           </Card>
+         </div>
+@@ -80,12 +74,12 @@ const Card = ({
+       onMouseEnter={() => setHovered(true)}
+       onMouseLeave={() => setHovered(false)}
+       onClick={() => setHovered(!hovered)}
+-      className="border border-white/[0.2] group/canvas-card flex items-center justify-center max-w-sm w-full mx-auto p-4 relative lg:h-[35rem] h-[25rem] rounded-3xl cursor-pointer"
++      className="border border-line-strong group/canvas-card flex items-center justify-center max-w-sm w-full mx-auto p-4 relative lg:h-[35rem] h-[25rem] rounded-3xl cursor-pointer"
+     >
+-      <Icon className="absolute h-6 w-6 -top-3 -left-3  text-white" />
+-      <Icon className="absolute h-6 w-6 -bottom-3 -left-3  text-white" />
+-      <Icon className="absolute h-6 w-6 -top-3 -right-3  text-white" />
+-      <Icon className="absolute h-6 w-6 -bottom-3 -right-3  text-white" />
++      <Icon className="absolute h-6 w-6 -top-3 -left-3  text-fg" />
++      <Icon className="absolute h-6 w-6 -bottom-3 -left-3  text-fg" />
++      <Icon className="absolute h-6 w-6 -top-3 -right-3  text-fg" />
++      <Icon className="absolute h-6 w-6 -bottom-3 -right-3  text-fg" />
+ 
+       <AnimatePresence>
+         {hovered && (
+@@ -112,7 +106,7 @@ const Card = ({
+           {icon}
+         </motion.div>
+         <motion.h2
+-          className=" relative z-10  mt-4 font-bold text-white text-center text-xl sm:text-2xl md:text-3xl px-4"
++          className="font-display relative z-10 mt-4 font-normal tracking-tight text-fg text-center text-2xl sm:text-3xl md:text-4xl px-4"
+           animate={{
+             opacity: hovered ? 1 : 0,
+             y: hovered ? 0 : 20,
+@@ -122,8 +116,7 @@ const Card = ({
+           {title}
+         </motion.h2>
+         <motion.p
+-          className="text-sm  relative z-10  mt-4 font-medium text-white text-center px-4"
+-          style={{ color: "#e4ecff" }}
++          className="text-sm relative z-10 mt-4 font-medium text-fg/80 text-center px-4"
+           animate={{
+             opacity: hovered ? 1 : 0,
+             y: hovered ? 0 : 20,
+@@ -140,9 +133,9 @@ const Card = ({
+ const AceternityIcon = ({ order }: { order: string }) => {
+   return (
+     <div>
+-      <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 ">
+-        <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)] " />
+-        <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-5 py-4 font-bold  text-white backdrop-blur-3xl text-2xl">
++      <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus-visible:ring-2 focus-visible:ring-fg focus-visible:ring-offset-2 focus-visible:ring-offset-page ">
++        <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#d6b370_0%,#131316_50%,#d6b370_100%)] " />
++        <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-panel px-5 py-4 font-display font-normal text-fg backdrop-blur-3xl text-2xl">
+           {order}
+         </span>
+       </button>
+diff --git a/components/Clients.tsx b/components/Clients.tsx
+index af3833f..49cd988 100644
+--- a/components/Clients.tsx
++++ b/components/Clients.tsx
+@@ -10,7 +10,7 @@ const Clients = () => {
+     <section id="testimonials" className="py-20">
+       <h1 className="heading">
+         Kind words from
+-        <span className="gradient-animated"> satisfied clients</span>
++        <span className="accent-text"> satisfied clients</span>
+       </h1>
+ 
+       <div className="flex flex-col items-center max-lg:mt-10">
+diff --git a/components/Footer.tsx b/components/Footer.tsx
+index 058ea41..6c028f7 100644
+--- a/components/Footer.tsx
++++ b/components/Footer.tsx
+@@ -28,7 +28,7 @@ const Footer = () => {
+             <div className="inline-block -translate-y-5">
+               <RotatingText
+                 texts={["professional", "brand", "Web", "Modern"]}
+-                mainClassName=" sm:px-2 md:px-3 bg-purple-600 text-white overflow-hidden  sm:py-2 md:py-2 justify-center rounded-lg "
++                mainClassName=" sm:px-2 md:px-3 bg-ac text-page italic overflow-hidden  sm:py-2 md:py-2 justify-center rounded-lg "
+                 staggerFrom={"last"}
+                 initial={{ y: "100%", opacity: 0 }}
+                 animate={{ y: 0, opacity: 1 }}
+@@ -56,7 +56,7 @@ const Footer = () => {
+             presence to the next level?
+           </h1>
+ 
+-          <p className="text-gray-400 md:mt-10 my-5 text-center">
++          <p className="text-mute md:mt-10 my-5 text-center">
+             Reach out to me today and let&apos;s discuss how I can help you
+             achieve your goals.
+           </p>
+@@ -73,7 +73,7 @@ const Footer = () => {
+             <TextShimmer
+               spread={22}
+               duration={3}
+-              className="font-bold [--base-color:var(--color-gray-600)] [--base-gradient-color:var(--color-gray-100)] dark:[--base-color:var(--color-gray-600)] dark:[--base-gradient-color:var(--color-white)] 
++              className="font-medium [--base-color:var(--color-mute)] [--base-gradient-color:var(--color-fg)]
+               max-sm:-translate-y-6"
+             >
+               {" "}
+diff --git a/components/Hero.module.css b/components/Hero.module.css
+index 8a919f1..2164353 100644
+--- a/components/Hero.module.css
++++ b/components/Hero.module.css
+@@ -1,11 +1,12 @@
+ /* Change the look here: colours and fonts are all variables. */
+ .hero {
+-  --bg: #0c0c0e;
+-  --card: #131316;
+-  --fg: #ecebe6;
+-  --mute: #8c8c92;
+-  --hl: rgba(255, 255, 255, 0.1);
+-  --ac: #d6b370; /* the one accent: dot, progress line, caret */
++  /* Colours come from the shared tokens in app/globals.css */
++  --bg: var(--color-page);
++  --card: var(--color-panel);
++  --fg: var(--color-fg);
++  --mute: var(--color-mute);
++  --hl: var(--color-line);
++  --ac: var(--color-ac); /* the one accent: dot, progress line, caret */
+   --serif: var(--font-serif), Georgia, "Times New Roman", serif;
+ 
+   position: relative;
+@@ -30,7 +31,7 @@
+   transform: translateX(-50%);
+   z-index: 0;
+   pointer-events: none;
+-  background: linear-gradient(#0c0c0e 0, #0c0c0e 80%, #000319 100%);
++  background: var(--bg);
+ }
+ 
+ /* ---- Intro: cover + mobile loader ---- */
+diff --git a/components/RecentProjects.tsx b/components/RecentProjects.tsx
+index d92e078..cb51641 100644
+--- a/components/RecentProjects.tsx
++++ b/components/RecentProjects.tsx
+@@ -123,7 +123,7 @@ function Arrow({ className = "" }: { className?: string }) {
+ }
+ 
+ const focusRing =
+-  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-purple-400";
++  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ac";
+ 
+ function Card({
+   p,
+@@ -163,33 +163,33 @@ function Card({
+     >
+       <motion.article
+         style={{ scale }}
+-        className="grid origin-top overflow-hidden rounded-lg border border-white/10 bg-[#05071d] lg:h-[min(32rem,calc(100svh-10.5rem))] lg:grid-cols-[5fr_7fr]"
++        className="grid origin-top overflow-hidden rounded-lg border border-line bg-panel lg:h-[min(32rem,calc(100svh-10.5rem))] lg:grid-cols-[5fr_7fr]"
+       >
+         <div className="order-2 flex flex-col justify-between gap-10 p-6 sm:p-8 lg:order-1 lg:p-10">
+           <div>
+-            <div className="flex items-center justify-between font-mono text-xs tracking-wider text-white/40">
++            <div className="flex items-center justify-between font-mono text-xs tracking-wider text-fg/40">
+               <span>
+                 {pad(i + 1)} / {pad(total)}
+               </span>
+               <span className="uppercase">{p.kind}</span>
+             </div>
+-            <h3 className="mt-6 text-[clamp(2.25rem,4.2vw,4rem)] font-medium leading-[0.95] tracking-[-0.035em] text-white">
++            <h3 className="font-display mt-6 text-[clamp(2.5rem,4.6vw,4.5rem)] font-normal leading-[0.95] tracking-[-0.025em] text-fg">
+               {p.name}
+             </h3>
+-            <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-white/60">
++            <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-fg/60">
+               {p.summary}
+             </p>
+           </div>
+ 
+           <div>
+-            <p className="font-mono text-xs leading-relaxed text-white/40">
++            <p className="font-mono text-xs leading-relaxed text-fg/40">
+               {p.stack.join("  /  ")}
+             </p>
+             <a
+               href={p.link}
+               target="_blank"
+               rel="noreferrer"
+-              className={`group/cta mt-5 inline-flex items-center gap-2 border-b border-white/30 pb-1 text-sm font-medium text-white transition-colors hover:border-purple-400 hover:text-purple-300 ${focusRing}`}
++              className={`group/cta mt-5 inline-flex items-center gap-2 border-b border-fg/30 pb-1 text-sm font-medium text-fg transition-colors hover:border-ac hover:text-ac ${focusRing}`}
+             >
+               View live site
+               <Arrow className="transition-transform duration-300 group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5 motion-reduce:transition-none" />
+@@ -204,15 +204,15 @@ function Card({
+             rel="noreferrer"
+             tabIndex={-1}
+             aria-hidden
+-            className="group flex flex-col overflow-hidden rounded-md border border-white/10 bg-[#000319] lg:h-full"
++            className="group flex flex-col overflow-hidden rounded-md border border-line bg-page lg:h-full"
+           >
+-            <div className="flex items-center gap-3 border-b border-white/10 px-4 py-2.5">
++            <div className="flex items-center gap-3 border-b border-line px-4 py-2.5">
+               <span className="flex gap-1.5" aria-hidden>
+-                <i className="size-2 rounded-full bg-white/15" />
+-                <i className="size-2 rounded-full bg-white/15" />
+-                <i className="size-2 rounded-full bg-white/15" />
++                <i className="size-2 rounded-full bg-fg/15" />
++                <i className="size-2 rounded-full bg-fg/15" />
++                <i className="size-2 rounded-full bg-fg/15" />
+               </span>
+-              <span className="min-w-0 flex-1 truncate rounded bg-white/[0.04] px-3 py-1 font-mono text-[11px] text-white/45">
++              <span className="min-w-0 flex-1 truncate rounded bg-fg/[0.04] px-3 py-1 font-mono text-[11px] text-fg/45">
+                 {host(p.link)}
+               </span>
+             </div>
+@@ -248,13 +248,13 @@ export default function RecentProjects() {
+   return (
+     <section
+       id="projects"
+-      className="py-20 font-[family-name:var(--font-display)] text-white md:py-32"
++      className="py-20 text-fg md:py-32"
+     >
+       <div className="mb-12 flex flex-col gap-6 md:mb-20 md:flex-row md:items-end md:justify-between">
+         <h2 className="heading !m-0 !text-left">
+-          Recent <span className="gradient-animated">projects</span>
++          Recent <span className="accent-text">projects</span>
+         </h2>
+-        <p className="max-w-xs text-sm leading-relaxed text-white/50">
++        <p className="max-w-xs text-sm leading-relaxed text-fg/50">
+           The four builds I&apos;d put first, then the rest of the shelf. Every
+           project opens as a live site.
+         </p>
+@@ -274,25 +274,25 @@ export default function RecentProjects() {
+       </div>
+ 
+       <div className="mt-16 md:mt-24">
+-        <div className="flex items-baseline justify-between border-b border-white/10 pb-4">
+-          <h3 className="text-lg font-medium tracking-tight">More builds</h3>
+-          <span className="font-mono text-xs text-white/40">
++        <div className="flex items-baseline justify-between border-b border-line pb-4">
++          <h3 className="font-display text-2xl font-normal tracking-tight">More builds</h3>
++          <span className="font-mono text-xs text-fg/40">
+             {pad(more.length)} projects
+           </span>
+         </div>
+         <ul>
+           {more.map((p, i) => (
+-            <li key={p.name} className="border-b border-white/10">
++            <li key={p.name} className="border-b border-line">
+               <a
+                 href={p.link}
+                 target="_blank"
+                 rel="noreferrer"
+-                className={`group grid grid-cols-[auto_1fr_auto] items-center gap-4 px-2 py-4 transition-colors hover:bg-white/[0.03] sm:grid-cols-[2rem_auto_1fr_auto] sm:gap-6 ${focusRing} focus-visible:outline-offset-[-2px]`}
++                className={`group grid grid-cols-[auto_1fr_auto] items-center gap-4 px-2 py-4 transition-colors hover:bg-fg/[0.03] sm:grid-cols-[2rem_auto_1fr_auto] sm:gap-6 ${focusRing} focus-visible:outline-offset-[-2px]`}
+               >
+-                <span className="hidden font-mono text-xs text-white/35 sm:block">
++                <span className="hidden font-mono text-xs text-fg/35 sm:block">
+                   {pad(featured.length + i + 1)}
+                 </span>
+-                <span className="relative block h-12 w-20 overflow-hidden rounded-sm bg-white/5 sm:h-14 sm:w-24">
++                <span className="relative block h-12 w-20 overflow-hidden rounded-sm bg-fg/5 sm:h-14 sm:w-24">
+                   <Image
+                     src={p.image}
+                     alt=""
+@@ -302,10 +302,10 @@ export default function RecentProjects() {
+                   />
+                 </span>
+                 <span className="min-w-0">
+-                  <span className="block truncate text-lg font-medium tracking-tight transition-colors group-hover:text-purple-300 sm:text-xl">
++                  <span className="font-display block truncate text-2xl font-normal tracking-tight transition-colors group-hover:text-ac sm:text-[1.75rem]">
+                     {p.name}
+                   </span>
+-                  <span className="block truncate text-sm text-white/45">
++                  <span className="block truncate text-sm text-fg/45">
+                     {p.kind}
+                     <span className="hidden sm:inline">
+                       {" "}
+@@ -313,7 +313,7 @@ export default function RecentProjects() {
+                     </span>
+                   </span>
+                 </span>
+-                <Arrow className="text-white/40 transition-[transform,color] duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-purple-300 motion-reduce:transition-none" />
++                <Arrow className="text-fg/40 transition-[transform,color] duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ac motion-reduce:transition-none" />
+               </a>
+             </li>
+           ))}
+diff --git a/components/WorkExperience.tsx b/components/WorkExperience.tsx
+index ddcf42a..b6b5668 100644
+--- a/components/WorkExperience.tsx
++++ b/components/WorkExperience.tsx
+@@ -7,9 +7,9 @@ import Image from "next/image";
+ const Experience = () => {
+   return (
+     <div className="py-20 w-full ">
+-      <h1 className="heading flex items-center justify-center text-4xl flex-wrap gap-4">
++      <h1 className="heading flex items-center justify-center flex-wrap gap-x-4">
+         My{" "}
+-        <SparklesText className="text-purple-500 font-[400]">
++        <SparklesText className="accent-text">
+           {" "}
+           work experience
+         </SparklesText>
+@@ -25,13 +25,11 @@ const Experience = () => {
+             style={{
+               //   add these two
+               //   you can generate the color from here https://cssgradient.io/
+-              background: "rgb(4,7,29)",
+-              backgroundColor:
+-                "linear-gradient(90deg, rgba(4,7,29,1) 0%, rgba(12,14,35,1) 100%)",
++              background: "var(--color-panel)",
+               boxShadow: `0 0 20px rgba(0,0,0,0.1)`,
+               borderRadius: `calc(1.75rem* 0.96)`,
+             }}
+-            className="flex-1 text-white  border-slate-800 dark:border-slate-800"
++            className="flex-1 text-fg border-line"
+           >
+             <div className="flex lg:flex-row flex-col lg:items-center p-3 py-6 md:p-5 lg:p-10 gap-2">
+               <Image
+@@ -42,10 +40,10 @@ const Experience = () => {
+                 className="lg:w-32 md:w-20 w-16"
+               />
+               <div className="lg:ms-5">
+-                <h1 className="text-start text-xl md:text-2xl font-bold">
++                <h1 className="font-display text-start text-2xl md:text-3xl font-normal tracking-tight">
+                   {card.title}
+                 </h1>
+-                <p className="text-start text-white-100 mt-3 font-semibold">
++                <p className="text-start text-mute mt-3 font-medium">
+                   {card.desc}
+                 </p>
+               </div>
+diff --git a/components/animate-ui/text/highlight.tsx b/components/animate-ui/text/highlight.tsx
+index b04dc6e..71aa791 100644
+--- a/components/animate-ui/text/highlight.tsx
++++ b/components/animate-ui/text/highlight.tsx
+@@ -48,8 +48,8 @@ function HighlightText({
+       }}
+       className={cn(
+         `relative inline-block px-2 py-1 rounded-lg bg-gradient-to-r 
+-         from-blue-500 to-purple-600 
+-         dark:from-indigo-500 dark:to-purple-600`,
++         from-ac to-ac
++         dark:from-ac dark:to-ac`,
+         className
+       )}
+       {...props}
+diff --git a/components/ui/MagicButton.tsx b/components/ui/MagicButton.tsx
+index 5f3b44c..b7d3524 100644
+--- a/components/ui/MagicButton.tsx
++++ b/components/ui/MagicButton.tsx
+@@ -26,12 +26,12 @@ const MagicButton = ({
+       className="relative inline-flex h-12 w-full md:w-60 md:mt-10 overflow-hidden rounded-lg p-[1px] focus:outline-none"
+       onClick={handleClick}
+     >
+-      <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
++      <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#d6b370_0%,#131316_50%,#d6b370_100%)]" />
+ 
+       {/* remove px-3 py-1, add px-5 gap-2 */}
+       <span
+         className={`inline-flex h-full w-full cursor-pointer items-center justify-center rounded-lg
+-             bg-slate-950 px-7 text-sm font-medium text-white backdrop-blur-3xl gap-2 ${otherClasses}`}
++             bg-panel px-7 text-sm font-medium text-fg backdrop-blur-3xl gap-2 ${otherClasses}`}
+       >
+         {position === "left" && icon}
+         {title}
+diff --git a/components/ui/MovingBorders.tsx b/components/ui/MovingBorders.tsx
+index b792840..2f06650 100644
+--- a/components/ui/MovingBorders.tsx
++++ b/components/ui/MovingBorders.tsx
+@@ -16,7 +16,7 @@ export function Button({
+   containerClassName,
+   borderClassName,
+   duration = 5000,
+-  glowColor = "#c084fc",
++  glowColor = "#d6b370",
+   className,
+   ...otherProps
+ }: {
+@@ -69,7 +69,7 @@ export function Button({
+ 
+       <div
+         className={cn(
+-          "relative flex h-full w-full items-center justify-center border-slate-800 bg-slate-900/[0.8] text-sm text-white antialiased backdrop-blur-lg border-2",
++          "relative flex h-full w-full items-center justify-center border-line bg-panel/90 text-sm text-fg antialiased backdrop-blur-lg border-2",
+           className
+         )}
+         style={{
+@@ -87,7 +87,7 @@ export const MovingBorder = ({
+   duration = 5000,
+   rx,
+   ry,
+-  glowColor = "#c084fc",
++  glowColor = "#d6b370",
+   ...otherProps
+ }: {
+   children: React.ReactNode;
+diff --git a/components/ui/ScrollProgressBar.tsx b/components/ui/ScrollProgressBar.tsx
+index 04e198c..138cd42 100644
+--- a/components/ui/ScrollProgressBar.tsx
++++ b/components/ui/ScrollProgressBar.tsx
+@@ -74,7 +74,7 @@ export default function ScrollProgressBar({
+     transformOrigin: "left center",
+     transition: "transform 180ms linear",
+     background:
+-      "linear-gradient(90deg, rgba(128,0,128,0) 0%, rgba(124,58,237,0.95) 100%)",
++      "linear-gradient(90deg, transparent 0%, var(--color-ac) 100%)",
+     height: "100%",
+   };
+ 
+diff --git a/components/ui/SectionHeading.tsx b/components/ui/SectionHeading.tsx
+index 8b42c1d..607f870 100644
+--- a/components/ui/SectionHeading.tsx
++++ b/components/ui/SectionHeading.tsx
+@@ -34,7 +34,7 @@ function HighlightedPhrase({
+   reducedMotion: boolean;
+ }) {
+   if (reducedMotion && variant === "animated-gradient") {
+-    return <span className="text-purple-500">{text}</span>;
++    return <span className="accent-text">{text}</span>;
+   }
+ 
+   switch (variant) {
+@@ -43,7 +43,7 @@ function HighlightedPhrase({
+         <TextShimmer
+           spread={5}
+           duration={reducedMotion ? 0 : 2.2}
+-          className="font-bold [--base-color:var(--color-purple-900)] [--base-gradient-color:var(--color-purple-500)]"
++          className="italic [--base-color:var(--color-ac)] [--base-gradient-color:var(--color-fg)]"
+         >
+           {text}
+         </TextShimmer>
+@@ -51,20 +51,20 @@ function HighlightedPhrase({
+     case "sparkle":
+       return (
+         <SparklesText
+-          className="text-purple-500 font-bold inline"
++          className="accent-text inline"
+           sparklesCount={reducedMotion ? 0 : 8}
+         >
+           {text}
+         </SparklesText>
+       );
+     case "animated-gradient":
+-      return <span className="gradient-animated">{text}</span>;
++      return <span className="accent-text">{text}</span>;
+     case "highlight":
+     default:
+       return (
+         <HighlightText
+           text={text}
+-          className="from-violet-500 to-purple-600 dark:from-violet-500 dark:to-purple-600"
++          className="from-ac to-ac text-page dark:from-ac dark:to-ac"
+           transition={
+             reducedMotion ? { duration: 0 } : { duration: 1.2, ease: "easeInOut" }
+           }
+diff --git a/components/ui/SparklesText.tsx b/components/ui/SparklesText.tsx
+index ed57cd5..9113e95 100644
+--- a/components/ui/SparklesText.tsx
++++ b/components/ui/SparklesText.tsx
+@@ -73,7 +73,7 @@ interface SparklesTextProps {
+   sparklesCount?: number;
+ 
+   /**
+-   * @default "{first: '#9E7AFF', second: '#FE8BBB'}"
++   * @default "{first: '#d6b370', second: '#ecebe6'}"
+    * @type string
+    * @description
+    * The colors of the sparkles
+@@ -86,7 +86,7 @@ interface SparklesTextProps {
+ 
+ export const SparklesText: React.FC<SparklesTextProps> = ({
+   children,
+-  colors = { first: "#9E7AFF", second: "#FE8BBB" },
++  colors = { first: "#d6b370", second: "#ecebe6" },
+   className,
+   sparklesCount = 10,
+   ...props
+@@ -130,7 +130,7 @@ export const SparklesText: React.FC<SparklesTextProps> = ({
+ 
+   return (
+     <div
+-      className={cn("text-6xl ", className)}
++      className={cn(className)}
+       {...props}
+       style={
+         {
+diff --git a/components/ui/TextShimmerComponent.tsx b/components/ui/TextShimmerComponent.tsx
+index af7b227..0f503ff 100644
+--- a/components/ui/TextShimmerComponent.tsx
++++ b/components/ui/TextShimmerComponent.tsx
+@@ -31,7 +31,7 @@ function TextShimmerComponent({
+       className={cn(
+         "relative inline-block bg-[length:250%_100%,auto] bg-clip-text",
+         "text-transparent  ",
+-        "[--base-color:#5a189a] [--base-gradient-color:#ffffff] [--bg:linear-gradient(90deg,#0000_calc(50%-var(--spread)),var(--base-gradient-color),#0000_calc(50%+var(--spread)))] ",
++        "[--base-color:var(--color-ac)] [--base-gradient-color:var(--color-fg)] [--bg:linear-gradient(90deg,#0000_calc(50%-var(--spread)),var(--base-gradient-color),#0000_calc(50%+var(--spread)))] ",
+         className
+       )}
+       initial={{ backgroundPosition: "100% center" }}
+diff --git a/components/ui/floating-navbar.tsx b/components/ui/floating-navbar.tsx
+index c0f7c24..760d404 100644
+--- a/components/ui/floating-navbar.tsx
++++ b/components/ui/floating-navbar.tsx
+@@ -56,7 +56,7 @@ export const FloatingNav = ({
+           duration: 0.2,
+         }}
+         className={cn(
+-          "flex max-w-fit  fixed top-10 inset-x-0 mx-auto border rounded-full shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] z-[5000] px-10  py-5 border-white/[0.3] bg-[#000319] items-center justify-center space-x-4",
++          "flex max-w-fit  fixed top-10 inset-x-0 mx-auto border rounded-full shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] z-[5000] px-10  py-5 border-line-strong bg-page items-center justify-center space-x-4",
+           className
+         )}
+       >
+@@ -65,7 +65,7 @@ export const FloatingNav = ({
+             key={`link=${idx}`}
+             href={navItem.link}
+             className={cn(
+-              "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
++              "relative items-center flex space-x-1 text-fg transition-colors hover:text-ac"
+             )}
+           >
+             <span className="block sm:hidden">{navItem.icon}</span>
+diff --git a/components/ui/infinite-moving-cards.tsx b/components/ui/infinite-moving-cards.tsx
+index eb04948..be417f4 100644
+--- a/components/ui/infinite-moving-cards.tsx
++++ b/components/ui/infinite-moving-cards.tsx
+@@ -93,17 +93,8 @@ export const InfiniteMovingCards = ({
+         {items.map((item, idx) => (
+           <li
+             //   change md:w-[450px] to md:w-[60vw] , px-8 py-6 to p-16, border-slate-700 to border-slate-800
+-            className="w-[90vw] max-w-full relative rounded-2xl border border-b-0
+-             flex-shrink-0 border-slate-800 p-5 md:p-16 md:w-[60vw]"
+-            style={{
+-              //   background:
+-              //     "linear-gradient(180deg, var(--slate-800), var(--slate-900)", //remove this one
+-              //   add these two
+-              //   you can generate the color from here https://cssgradient.io/
+-              background: "rgb(4,7,29)",
+-              backgroundColor:
+-                "linear-gradient(90deg, rgba(4,7,29,1) 0%, rgba(12,14,35,1) 100%)",
+-            }}
++            className="w-[90vw] max-w-full relative rounded-2xl border border-line
++             flex-shrink-0 bg-panel p-5 md:p-16 md:w-[60vw]"
+             // change to idx cuz we have the same name
+             key={idx}
+           >
+@@ -113,7 +104,7 @@ export const InfiniteMovingCards = ({
+                 className="user-select-none -z-1 pointer-events-none absolute -left-0.5 -top-0.5 h-[calc(100%_+_4px)] w-[calc(100%_+_4px)]"
+               ></div>
+               {/* change text color, text-lg */}
+-              <span className=" relative z-20 text-sm md:text-lg leading-[1.6] text-white font-normal">
++              <span className="font-display relative z-20 text-lg md:text-2xl leading-[1.4] text-fg font-normal">
+                 {item.quote}
+               </span>
+               <div className="relative z-20 mt-6 flex flex-row items-center">
+@@ -123,11 +114,11 @@ export const InfiniteMovingCards = ({
+                 </div>
+                 <span className="flex flex-col gap-1">
+                   {/* change text color, font-normal to font-bold, text-xl */}
+-                  <span className="text-xl font-bold leading-[1.6] text-white">
++                  <span className="text-base font-semibold leading-[1.6] text-fg">
+                     {item.name}
+                   </span>
+                   {/* change text color */}
+-                  <span className=" text-sm leading-[1.6] text-white font-normal">
++                  <span className="text-sm leading-[1.6] text-mute font-normal">
+                     {item.title}
+                   </span>
+                 </span>
+diff --git a/public/footer-grid.svg b/public/footer-grid.svg
+index 0948698..376d38a 100644
+--- a/public/footer-grid.svg
++++ b/public/footer-grid.svg
+@@ -8,23 +8,23 @@
+ <defs>
+ <radialGradient id="paint0_radial_1_67" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(263.361 601.534) rotate(90.677) scale(68.5865 119.024)">
+ <stop stop-color="white" stop-opacity="0.8"/>
+-<stop offset="1" stop-color="#05041F"/>
++<stop offset="1" stop-color="#0c0c0e"/>
+ </radialGradient>
+ <radialGradient id="paint1_radial_1_67" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(632.686 310.266) rotate(90) scale(72.8153 126.361)">
+ <stop stop-color="white" stop-opacity="0.8"/>
+-<stop offset="1" stop-color="#05041F"/>
++<stop offset="1" stop-color="#0c0c0e"/>
+ </radialGradient>
+ <radialGradient id="paint2_radial_1_67" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(539.591 887.716) rotate(91.981) scale(70.317 122.039)">
+ <stop stop-color="white" stop-opacity="0.8"/>
+-<stop offset="1" stop-color="#05041F"/>
++<stop offset="1" stop-color="#0c0c0e"/>
+ </radialGradient>
+ <radialGradient id="paint3_radial_1_67" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(912.224 697.208) rotate(90.6768) scale(68.5866 119.024)">
+ <stop stop-color="white" stop-opacity="0.8"/>
+-<stop offset="1" stop-color="#05041F"/>
++<stop offset="1" stop-color="#0c0c0e"/>
+ </radialGradient>
+ <radialGradient id="paint4_radial_1_67" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(632.751 599.839) rotate(90) scale(74.5086 129.299)">
+ <stop stop-color="white" stop-opacity="0.8"/>
+-<stop offset="1" stop-color="#05041F"/>
++<stop offset="1" stop-color="#0c0c0e"/>
+ </radialGradient>
+ <radialGradient id="paint5_radial_1_67" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(632.832 551.457) rotate(90) scale(513.94 491.711)">
+ <stop stop-color="white"/>

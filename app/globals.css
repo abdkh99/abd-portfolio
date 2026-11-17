@@ -1,27 +1,20 @@
 @import "tailwindcss";
-/* إذا بدك تضيف أي @layer أو متغيرات: */
-@layer base {
-  :root {
-    --black-100: #000319;
-    --background-elevated: #060010;
-    --background-card: rgb(4, 7, 29);
-    --border-strong: #392e4e;
-    --accent-primary: #9333ea;
-    --accent-primary-soft: #9b3cc7;
-    --text-muted: #9ca3af;
-  }
-  /* لو بدك تستخدم الـ CSS var بدل الكلاسات: */
-  /* body { background-color: var(--black-100); } */
-}
 
-@layer utilities {
-  /* لو حابب تضيف utils إضافية: */
-  .bg-black-100 {
-    background-color: var(--black-100);
-  }
-  .text-black-100 {
-    color: var(--black-100);
-  }
+/* ------------------------------------------------------------------
+   Design tokens: taken from the Hero. Change a colour here and the whole
+   site follows. Tailwind utilities: bg-page, bg-panel, text-fg, text-mute,
+   text-ac, border-line, border-line-strong (all accept /opacity).
+   Fonts: --font-serif (Instrument Serif) for display, --font-sans (Manrope)
+   for body. They are loaded in app/layout.tsx.
+------------------------------------------------------------------- */
+@theme static {
+  --color-page: #0c0c0e;
+  --color-panel: #131316;
+  --color-fg: #ecebe6;
+  --color-mute: #8c8c92;
+  --color-ac: #d6b370;
+  --color-line: rgb(255 255 255 / 0.1);
+  --color-line-strong: rgb(255 255 255 / 0.2);
 }
 
 @theme inline {
@@ -71,17 +64,39 @@
   }
 }
 
-:root, html, body {
-  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+html {
+  background: var(--color-page);
+}
+body {
+  background: var(--color-page);
+  color: var(--color-fg);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+::selection {
+  background: var(--color-ac);
+  color: var(--color-page);
 }
 
 @layer utilities {
+  /* Section titles: same serif as the Hero title */
   .heading {
-    @apply font-bold text-4xl md:text-5xl text-center text-white;
+    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+    font-weight: 400;
+    font-size: clamp(2.5rem, 5vw, 4.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    text-align: center;
+    color: var(--color-fg);
   }
-
-  .black-gradient {
-    background: linear-gradient(90deg, #161a31 0%, #06091f 100%);
+  .font-display {
+    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  }
+  /* The one highlighted phrase in a title: italic + the accent colour */
+  .accent-text {
+    color: var(--color-ac);
+    font-style: italic;
   }
 }
 
@@ -95,32 +110,6 @@
     }
   }
 }
-.text-purple {
-  color: purple;
-}
-@keyframes gradient-pan {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.gradient-animated {
-
-  background: linear-gradient(90deg, #06b6d4, #7c3aed, #ef44ca, #0021b6);
-  background-size: 300% 300%; 
-  background-repeat: no-repeat;
-
-  -webkit-background-clip: text;
-  background-clip: text;
-
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-
-  animation: gradient-pan 6s linear infinite;
-
-  will-change: background-position;
-}
-
 /* Start Social Icon */
 .example-2 {
   display: flex;
@@ -128,7 +117,7 @@
   align-items: center;
 }
 .example-2 .icon-content {
-  margin: 0 10px;
+  margin: 0 8px;
   position: relative;
 }
 .example-2 .icon-content .tooltip {
@@ -136,12 +125,14 @@
   top: -30px;
   left: 50%;
   transform: translateX(-50%);
-  color: #fff;
+  color: var(--color-fg);
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
   padding: 6px 10px;
-  border-radius: 5px;
+  border-radius: 8px;
   opacity: 0;
   visibility: hidden;
-  font-size: 14px;
+  font-size: 13px;
   transition: all 0.3s ease;
 }
 .example-2 .icon-content:hover .tooltip {
@@ -155,24 +146,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  color: #4d4d4d;
-  background-color: #ffffff;
-  transition: all 0.3s ease-in-out;
+  color: var(--color-fg);
+  background-color: var(--color-panel);
+  border: 1px solid var(--color-line);
+  transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out;
 }
 .example-2 .icon-content a:hover {
-  box-shadow: 3px 2px 45px 0px rgb(0 0 0 / 12%);
+  color: var(--color-page);
+  border-color: var(--color-ac);
+}
+.example-2 .icon-content a:focus-visible {
+  outline: 2px solid var(--color-fg);
+  outline-offset: 3px;
 }
 .example-2 .icon-content a svg {
   position: relative;
   z-index: 1;
-  width: 30px;
-  height: 30px;
-}
-.example-2 .icon-content a:hover {
-  color: white;
+  width: 22px;
+  height: 22px;
 }
 .example-2 .icon-content a .filled {
   position: absolute;
@@ -181,36 +175,10 @@
   left: 0;
   width: 100%;
   height: 0;
-  background-color: #000;
+  background-color: var(--color-ac);
   transition: all 0.3s ease-in-out;
 }
 .example-2 .icon-content a:hover .filled {
   height: 100%;
-}
-
-.example-2 .icon-content a[data-social="linkedin"] .filled,
-.example-2 .icon-content a[data-social="linkedin"] ~ .tooltip {
-  background-color: #0274b3;
-}
-
-.example-2 .icon-content a[data-social="github"] .filled,
-.example-2 .icon-content a[data-social="github"] ~ .tooltip {
-  background-color: #24262a;
-}
-.example-2 .icon-content a[data-social="instagram"] .filled,
-.example-2 .icon-content a[data-social="instagram"] ~ .tooltip {
-  background: linear-gradient(
-    45deg,
-    #405de6,
-    #5b51db,
-    #b33ab4,
-    #c135b4,
-    #e1306c,
-    #fd1f1f
-  );
-}
-.example-2 .icon-content a[data-social="youtube"] .filled,
-.example-2 .icon-content a[data-social="youtube"] ~ .tooltip {
-  background-color: #ff0000;
 }
 /* End Social Icon */
